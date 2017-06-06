@@ -1,8 +1,16 @@
 # Jane's Notes
 
 ## Table of Contents
-* [Interleaving Reads] (https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#interleaving-reads)
-### 30 May 2017 - 6 June 2017
+* [Interleaving Reads](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#interleaving-reads)
+* [Quality Control](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#quality-control-of-the-reads)
+* [Extracting Match Pair Reads](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#extracting-match-paired-reads)
+* [Assembling Paired Reads](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#assembling-the-paired-reads)
+* [MetaQUAST](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#metaquast)
+* [Mapping](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#mapping)
+* [Indexing the Contigs](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#indexing-the-contigs)
+* [Mapping Reads](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#mapping-reads-from-cen01-cen03-cen04-cen05-cen06-cen07-cen10-cen12-cen14-cen15-cen16-and-cen17)
+
+#### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
 
 Last week I submitted my first job, which was to interleave the two data files with forward and reverse reads. Each of the data files, from the cultured thermophiles are 26 Gb.
@@ -177,7 +185,8 @@ cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
 ```
 
-### 6 June 2017
+## Converting .sam to .bam
+#### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.2 to do this. Here is an example of one job script, but I will have to do this for every sample site.
 ```
 #! /bin/bash

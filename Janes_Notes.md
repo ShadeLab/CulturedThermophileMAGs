@@ -1,5 +1,6 @@
 # Jane's Notes
 
+## 30 May 2017 - 6 June 2017
 ## Interleaving Reads
 Last week I submitted my first job, which was to interleave the two data files with forward and reverse reads. Each of the data files, from the cultured thermophiles are 26 Gb.
 
@@ -172,3 +173,25 @@ module load bbmap
 cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
 ```
+
+## 6 June 2017
+Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.2 to do this. Here is an example of one job script, but I will have to do this for every sample site.
+```
+#! /bin/bash
+
+#PBS -l walltime=1:00:00
+#PBS -l mem=100 Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184
+#PBS -o /mnt/ls15/scratch/users/f0002184
+#PBS -N Sam_to_Bam_Cen01
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load GNU/4.8.3
+module load SAMTools/1.3
+cd /mnt/ls15/scratch/users/f0002184
+samtools view -bS Cen01_MA.sam > Cen01_MA.bam
+samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
+```
+This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.

@@ -34,6 +34,7 @@ Once I got my combined reads file, I used software fastx in order to quality con
 Job script for fastx:
 ```
 #! /bin/bash    
+
 #PBS -l walltime=12:00:00
 #PBS -l nodes=1:ppn=8
 #PBS -l mem=100Gb
@@ -90,6 +91,54 @@ module load megahit
 cd /mnt/ls15/scratch/users/f0002184/
 megahit --12 combined_filtered.fastq.pe --k-list 27,37,47,57,67,77,87,97,107 -o Megahit_QC_Assembly/ -t $PBS_NUM_PPN
 ```
-The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. I made a copy of this file just in case and copied it into my original directory.
+The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. The size of this file is 1.1 Gb. I made a copy of this file just in case and copied it into my original directory.
 ___
-___
+## Mapping
+There are a couple steps to mapping the reads from the other sites to the assembled contigs. Primarily I need to index the contigs (the Mega-Assembly or MA) and then map the reads onto them.
+
+Since I have the final.contigs.fa file in my original directory, I made a new directory for the sole purpose of mapping, called MAPPING_MEGA_ASSEMBLY which can be found in /mnt/ls15/scratch/users/f0002184/ and copied the final contigs file into it.
+```
+cp final.contigs.fa /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
+```
+
+### Indexing the Contigs
+I used a job to do this. It was very speedy! Only 3 minutes or so.
+```
+#! /bin/bash
+
+#PBS -l walltime=2:00:00
+#PBS -l mem=250 Gb
+#PBS -l nodes=1:ppn=12
+#PBS -e /mnt/scratch/ls15/users/f0002184/MAPPING_MEGA_ASSEMBLY
+#PBS -o /mnt/scratch/ls15/users/f0002184/MAPPING_MEGA_ASSEMBLY
+#PBS -N index_mega_assembly
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load bbmap
+cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
+bbmap.sh ref=final.contigs.fa build=1 -Xmx215g
+```
+This job is called index_assembled_contigs.qsub in the MAPPING_MEGA_ASSEMBLY directory.
+It created a directory called ref, in which there are two directories, genome and index, in which there is a directory called 1 in each of them, where there are files for chrom1-3, and in /genome/1/ there is an info.txt file and a summary.txt file. The entire ref directory is 33 Gb.
+
+## Mapping Reads from Cen01, Cen03, Cen04, Cen05, Cen06, Cen07, Cen10, Cen12, Cen14, Cen15, Cen16, and Cen17
+I copied the reads from all the other Centralia sites from /mnt/research/ShadeLab/Sorensen/JGI_Metagenomes/ into the MAPPING_MEGA_ASSEMBLY directory. They all vary in size.
+
+I then wrote job scripts for each of those sites to map the reads, the one for Cen01 named map_Cen01_MA.qsub accordingly, the one for Cen02 named map_Cen02_MA.qsub etc. I gave 2 days for map_Cen01_MA.qsub and 7 days for every other one, submitted between 13:22 and 17:00 on 5 June 2017. The job script for Cen01 looks like this:
+```
+#! /bin/bash
+
+#PBS -l walltime=48:00:00
+#PBS -l mem=250Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
+#PBS -o /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
+#PBS -N map_Cen01_MA
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load bbmap
+cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
+bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
+```

@@ -1,7 +1,7 @@
 # Jane's Notes
 
 ## Table of Contents
-* [Interleaving Reads] (https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#interleaving-reads)
+* [Interleaving Reads] (#https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#interleaving-reads)
 ### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
 

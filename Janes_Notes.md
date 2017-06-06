@@ -109,9 +109,9 @@ I don't need a job for this, but it does take a couple minutes. This resulted in
 
 |Assembly | final.contigs|
 | --------|:------------|
-|# contigs >= 0 bp | 508410|
-|# contigs >= 1000 bp | 222766|
-|Total length >= 0 bp | 898424779|
+|# contigs (>= 0 bp) | 508410|
+|# contigs (>= 1000 bp) | 222766|
+|Total length (>= 0 bp) | 898424779|
 |Total length (>= 1000 bp) | 698652595|
 |# contigs | 508410|
 |Largest contig | 413537|       

@@ -90,4 +90,6 @@ module load megahit
 cd /mnt/ls15/scratch/users/f0002184/
 megahit --12 combined_filtered.fastq.pe --k-list 27,37,47,57,67,77,87,97,107 -o Megahit_QC_Assembly/ -t $PBS_NUM_PPN
 ```
-I submitted this job overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. I made a copy of this file just in case and copied it into my original directory.
+The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. I made a copy of this file just in case and copied it into my original directory.
+___
+___

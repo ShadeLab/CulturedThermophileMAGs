@@ -26,7 +26,7 @@ interleave-reads.py Cen13_05102014Pooled_ctDNA_GCCAAT_L002_R1_001.fastq Cen13_05
 ```
 This job script, called interleave.qsub can be found in /mnt/ls15/scratch/users/f0002184/
 
-The results were one file, named combined_reads.fastq, is in the same directory with 51 Gb.
+The results were one file, named combined_reads.fastq, and are in the same directory with 51 Gb.
 
 ## Quality Control of the Reads
 Once I got my combined reads file, I used software fastx in order to quality control and eliminate reads with 51% or greater q-scores less than 30 (meaning 1 in 1000 errors).
@@ -101,7 +101,7 @@ tar xzvf quast-2.3.tar.gz
 cd quast-2.3
 ```
 
-After this, I ran the program using the final.contigs.fa file.
+After this, I ran the program with the final.contigs.fa file.
 ```
 python metaquast.py -o /mnt/ls15/scratch/users/f0002184/quast-2.3 final.contigs.fa
 ```

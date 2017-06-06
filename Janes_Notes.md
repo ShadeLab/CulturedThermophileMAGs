@@ -92,6 +92,36 @@ cd /mnt/ls15/scratch/users/f0002184/
 megahit --12 combined_filtered.fastq.pe --k-list 27,37,47,57,67,77,87,97,107 -o Megahit_QC_Assembly/ -t $PBS_NUM_PPN
 ```
 The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. The size of this file is 1.1 Gb. I made a copy of this file just in case and copied it into my original directory.
+
+## MetaQUAST
+I used MetaQuast to get summary statistics on the assembled contigs using MetaQUAST version 2.3. I created a new directory called quast-2.3, where I loaded and executed the program interactively.
+```
+wget https://downloads.sourceforge.net/project/quast/quast-2.3.tar.gz
+tar xzvf quast-2.3.tar.gz
+cd quast-2.3
+```
+
+After this, I ran the program using the final.contigs.fa file.
+```
+python metaquast.py -o /mnt/ls15/scratch/users/f0002184/quast-2.3 final.contigs.fa
+```
+I don't need a job for this, but it does take a couple minutes. This resulted in several directories, of which one is quast_output. Once I cd into that, there is a text file named report.txt. When I use more to see the text file, there is a nice summary of my contigs!
+
+|Assembly | final.contigs|
+| --------|:------------|
+|# contigs >= 0 bp | 508410|
+|# contigs >= 1000 bp | 222766|
+|Total length >= 0 bp | 898424779|
+|Total length (>= 1000 bp) | 698652595|
+|# contigs | 508410|
+|Largest contig | 413537|       
+|Total length | 898424779|    
+|GC (%) | 63.90|   
+|N50 | 2651|       
+|N75 | 1087|        
+|L50 | 59145|        
+|L75 | 198925|       
+|# N's per 100 kbp | 0.00|
 ___
 ## Mapping
 There are a couple steps to mapping the reads from the other sites to the assembled contigs. Primarily I need to index the contigs (the Mega-Assembly or MA) and then map the reads onto them.

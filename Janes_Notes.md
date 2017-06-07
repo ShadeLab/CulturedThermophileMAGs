@@ -210,4 +210,4 @@ samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
 This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.
 
 #### 7 June 2017
-map_Cen01_MA begun execution
+map_Cen01_MA begun execution and finished! It took about 5 hours, which is much shorter than what I was expecting. It created a new file, Cen01_MA.sam in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY. I submitted the job to convert it to a bam file for MetaBat. 

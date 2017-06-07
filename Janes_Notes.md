@@ -208,3 +208,6 @@ samtools view -bS Cen01_MA.sam > Cen01_MA.bam
 samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
 ```
 This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.
+
+#### 7 June 2017
+map_Cen01_MA begun execution

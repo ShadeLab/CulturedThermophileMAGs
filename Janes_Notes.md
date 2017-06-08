@@ -192,7 +192,7 @@ Now that the jobs are submitted and are in queue, I think it's going to take a f
 ```
 #! /bin/bash
 
-#PBS -l walltime=1:00:00
+#PBS -l walltime=10:00:00
 #PBS -l mem=100 Gb
 #PBS -l nodes=1:ppn=8
 #PBS -e /mnt/ls15/scratch/users/f0002184
@@ -215,6 +215,12 @@ map_Cen01_MA begun execution and finished! It took about 5 hours, which is much 
 Still waiting on all the other .sam files though.
 
 #### 8 June 2017
-map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA and map_Cen12_MA are done! Submitted the jobs to convert them into .bam files. Had some issues regarding memory but other than that, everything is good! Other mapping jobs began to run! Yay!
+map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA, map_Cen12_MA, map_Cen15_MA are done! Submitted the jobs to convert them into .bam files. Had some issues regarding memory and changed the walltime from 1 hour to 1 day to 10 hours to 5 hours but other than that, everything is good! Other mapping jobs began to run! Yay!
 
 The .sam files seem to be around 50-60Gb.
+
+Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
+
+Ready: Cen01, Cen03, Cen05
+Sam to Bam: Cen06, Cen07, Cen12, Cen14, Cen04, Cen15
+Mapping: Cen17, Cen16, Cen10

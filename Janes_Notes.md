@@ -222,5 +222,7 @@ The .sam files seem to be around 50-60Gb.
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
 
 Ready: Cen01, Cen03, Cen05
+
 Sam to Bam: Cen06, Cen07, Cen12, Cen14, Cen04, Cen15
+
 Mapping: Cen17, Cen16, Cen10

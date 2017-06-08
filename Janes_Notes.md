@@ -215,4 +215,6 @@ map_Cen01_MA begun execution and finished! It took about 5 hours, which is much 
 Still waiting on all the other .sam files though.
 
 #### 8 June 2017
-map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA and map_Cen12_MA are done! Submitted the jobs to convert them into .bam files. Had some issues regarding memory but other than that, everything is good! Other mapping jobs began to run! Yay! 
+map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA and map_Cen12_MA are done! Submitted the jobs to convert them into .bam files. Had some issues regarding memory but other than that, everything is good! Other mapping jobs began to run! Yay!
+
+The .sam files seem to be around 50-60Gb.

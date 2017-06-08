@@ -210,6 +210,9 @@ samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
 This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.
 
 #### 7 June 2017
-map_Cen01_MA begun execution and finished! It took about 5 hours, which is much shorter than what I was expecting. It created a new file, Cen01_MA.sam in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY. I submitted the job to convert it to a bam file for MetaBat which didn't take long at all (s/o to Jackson for updating SAMTools yay!). I created a new directory for only .bam files in the MAPPING_MEGA_ASSEMBLY directory called BAM_Files.
+map_Cen01_MA begun execution and finished! It took about 5 hours, which is much shorter than what I was expecting. It created a new file, Cen01_MA.sam in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY. I submitted the job to convert it to a bam file (s/o to Jackson for updating SAMTools yay!). I created a new directory for only .bam files in the MAPPING_MEGA_ASSEMBLY directory called BAM_Files.
 
 Still waiting on all the other .sam files though.
+
+#### 8 June 2017
+map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA and map_Cen12_MA are done! Submitted the jobs to convert them into .bam files. Had some issues regarding memory but other than that, everything is good! Other mapping jobs began to run! Yay! 

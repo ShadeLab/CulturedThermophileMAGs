@@ -223,6 +223,6 @@ Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished conver
 
 Ready: Cen01, Cen03, Cen05
 
-Sam to Bam: Cen06, Cen07, Cen12, Cen14, Cen04, Cen15
+Sam to Bam: Cen04, Cen06, Cen07, Cen12, Cen14, Cen15
 
-Mapping: Cen17, Cen16, Cen10
+Mapping: Cen10, Cen16, Cen17

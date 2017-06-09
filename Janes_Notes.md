@@ -189,12 +189,12 @@ bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.f
 
 ## Converting .sam to .bam
 #### 6 June 2017
-Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.2 to do this. Here is an example of one job script, but I will have to do this for every sample site.
+Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.
 ```
 #! /bin/bash
 
 #PBS -l walltime=10:00:00
-#PBS -l mem=100 Gb
+#PBS -l mem=100Gb
 #PBS -l nodes=1:ppn=8
 #PBS -e /mnt/ls15/scratch/users/f0002184
 #PBS -o /mnt/ls15/scratch/users/f0002184
@@ -209,6 +209,8 @@ samtools view -bS Cen01_MA.sam > Cen01_MA.bam
 samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
 ```
 This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.
+
+I ran into my first small and rather silly problem here. I originally had put 100 Gb in my script, but clearly that didn't work, so keep in mind, there are no spaces between them!!!!!!! As seen above, it's 100Gb, NOT 100 Gb! Silly me. Also, converting these files only took around 3 hours each. 
 
 #### 7 June 2017
 map_Cen01_MA begun execution and finished! It took about 5 hours, which is much shorter than what I was expecting. It created a new file, Cen01_MA.sam in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY. I submitted the job to convert it to a bam file (s/o to Jackson for updating SAMTools yay!). I created a new directory for only .bam files in the MAPPING_MEGA_ASSEMBLY directory called BAM_Files.
@@ -240,11 +242,34 @@ This is where I ran into my first BIG PROBLEM! After trying to figure out this o
 ```
 [E::hts_open] fail to open file
 ```
-for ETERNITY, turns out my Cen03_MA.bam file was only something like 15M instead of like 15 Gb like the other .bam files. I re-ran my job script to convert Cen03_MA.sam to Cen03_MA.bam but then I looked at my original Cen03_MA.bam which was 15 Gb so I guess something went wrong copying the original to the BAM_Files directory. Either way, I am now waiting for the depth file! I did everything in the command line, although as of now I'm kind of regretting my decision and wondering if I should have submitted a job. Anyway, I entered:
+for ETERNITY, turns out my Cen03_MA.bam file was only something like 15M instead of like 15 Gb like the other .bam files (s/o to Jackson for coming in clutch!!). I re-ran my job script to convert Cen03_MA.sam to Cen03_MA.bam but then I looked at my original Cen03_MA.bam which was 15 Gb so I guess something went wrong copying the original to the BAM_Files directory. Either way, I am now waiting for the depth file! I did everything in the command line, although as of now I'm kind of regretting my decision and wondering if I should have submitted a job. Anyway, I entered:
 ```
 cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files
 tmux new -s METABAT
 module load GNU/4.8.3
 module load MetaBAT/20160622
 jgi_summarize_bam_contig_depths --outputDepth depth.txt *.bam
+```
+This took a couple hours so maybe I should've submitted a job but it's done now!
+I made a Genome_Binning directory under BAM_Files and put the result of this, depth.txt in it. depth.txt is 87 Mb.
+
+I submitted my binning job!!! I hope it works with no more BIG PROBLEMS!
+Here is the script, called binning.qsub in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning.
+```
+#! /bin/bash
+
+#PBS -l walltime=48:00:00
+#PBS -l mem=200Gb
+#PBS -l nodes=2:ppn=20
+#PBS -e /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
+#PBS -o /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
+#PBS -N Binning_Genomes
+#PBS -l feature='intel14|intel16'
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load GNU/4.8.3
+module load MetaBAT/20160622
+cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Genome_Binning
+metabat -i cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/final.contigs.fa -v -a depth.txt -o METABAT_VerySpecific --saveTNF saved.tnf --saveDistance saved.dist -t 40 --veryspecific
 ```

@@ -253,7 +253,7 @@ jgi_summarize_bam_contig_depths --outputDepth depth.txt *.bam
 This took a couple hours so maybe I should've submitted a job but it's done now!
 I made a Genome_Binning directory under BAM_Files and put the result of this, depth.txt in it. depth.txt is 87 Mb.
 
-I submitted my binning job!!! I hope it works with no more BIG PROBLEMS!
+I submitted my binning job!!! I hope it works smoothly, but I'm glad it has the weekend to run!
 Here is the script, called binning.qsub in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning.
 ```
 #! /bin/bash
@@ -274,4 +274,4 @@ cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Genome_Binning
 metabat -i cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/final.contigs.fa -v -a depth.txt -o METABAT_VerySpecific --saveTNF saved.tnf --saveDistance saved.dist -t 40 --veryspecific
 ```
 
-As you can see above, it says #PBS -l nodes=2! 2 nodes!!! #PBS -l feature='intel14|intel16' specifies which nodes should work with the job. Could it be...COULD IT BE...PARALLEL COMPUTING!!
+As you can see above, it says #PBS -l nodes=2! 2 nodes!!! #PBS -l feature='intel14|intel16' specifies which nodes should work with the job. Could it be...COULD IT BE...PARALLEL COMPUTING!?!!

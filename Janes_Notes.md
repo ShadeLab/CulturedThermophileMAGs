@@ -221,8 +221,29 @@ The .sam files seem to be around 50-60Gb.
 
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
 
-Ready: Cen01, Cen03, Cen05
+## Binning
+#### 9 June 2017
+Everything has been converted to BAM files and copied to my BAM_Files directory!
 
-Sam to Bam: Cen04, Cen06, Cen07, Cen12, Cen14, Cen15
+I indexed the files in BAM_Files in order for MetaBAT to work using
+```
+module load GNU/4.8.3
+module load SAMTools/1.3
+samtools index -b BAM_files/*
+```
+in my bash terminal under the MAPPING_MEGA_ASSEMBLY directory.
 
-Mapping: Cen10, Cen16, Cen17
+Now I will create a depth file.
+
+This is where I ran into my first BIG PROBLEM! After trying to figure out this ominous error message:
+```
+[E::hts_open] fail to open file
+```
+for ETERNITY, turns out my Cen03_MA.bam file was only something like 15M instead of like 15 Gb like the other .bam files. I re-ran my job script to convert Cen03_MA.sam to Cen03_MA.bam but then I looked at my original Cen03_MA.bam which was 15 Gb so I guess something went wrong copying the original to the BAM_Files directory. Either way, I am now waiting for the depth file! I did everything in the command line, although as of now I'm kind of regretting my decision and wondering if I should have submitted a job. Anyway, I entered:
+```
+cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files
+tmux new -s METABAT
+module load GNU/4.8.3
+module load MetaBAT/20160622
+jgi_summarize_bam_contig_depths --outputDepth depth.txt *.bam
+```

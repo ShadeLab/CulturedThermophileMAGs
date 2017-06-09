@@ -210,7 +210,7 @@ samtools sort -o Cen01_MA.bam -T Cen01_Sorted -@ 8 -m 8G Cen01_MA.bam
 ```
 This job is called sam_to_bam_Cen01.qsub in /mnt/ls15/scratch/users/f0002184.
 
-I ran into my first small and rather silly problem here. I originally had put 100 Gb in my script, but clearly that didn't work, so keep in mind, there are no spaces between them!!!!!!! As seen above, it's 100Gb, NOT 100 Gb! Silly me. Also, converting these files only took around 3 hours each. 
+I ran into my first small and rather silly problem here. I originally had put 100 Gb in my script, but clearly that didn't work, so keep in mind, there are no spaces between them!!!!!!! As seen above, it's 100Gb, NOT 100 Gb! Silly me. Also, converting these files only took around 3 hours each.
 
 #### 7 June 2017
 map_Cen01_MA begun execution and finished! It took about 5 hours, which is much shorter than what I was expecting. It created a new file, Cen01_MA.sam in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY. I submitted the job to convert it to a bam file (s/o to Jackson for updating SAMTools yay!). I created a new directory for only .bam files in the MAPPING_MEGA_ASSEMBLY directory called BAM_Files.
@@ -261,10 +261,10 @@ Here is the script, called binning.qsub in /mnt/ls15/scratch/users/f0002184/MAPP
 #PBS -l walltime=48:00:00
 #PBS -l mem=200Gb
 #PBS -l nodes=2:ppn=20
+#PBS -l feature='intel14|intel16'
 #PBS -e /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
 #PBS -o /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
 #PBS -N Binning_Genomes
-#PBS -l feature='intel14|intel16'
 #PBS -M jlee4946@gmail.com
 #PBS -m abe
 

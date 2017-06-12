@@ -290,3 +290,7 @@ Also changed ppn=40 from ppn=20.
 
 Also check out this cool [link](https://wiki.gacrc.uga.edu/wiki/MetaBAT-Sapelo)
 with some tips!
+
+So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb.
+
+I tried installing CheckM for quality control and to determine the taxonomy of the bins, but installing that was an absolute disaster. Went down to the HPCC help desk, tried to work through it, but now waiting on response.

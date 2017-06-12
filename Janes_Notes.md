@@ -1,4 +1,5 @@
 # Jane's Notes
+This project takes quality controlled sequenced DNA from a cultured pool and assembles the reads using the khmer package and metahit respectively. Reads from 12 other sites are mapped against the assembled contigs from the cultured pool and respective abundances are estimated. The contigs are then sorted and binned based on abundance patterns as well as tetranucleotide sequences using MetaBAT. Using CheckM, the bins are quality controlled and taxonomy determined. Response patterns are noted and gene content annotated in order to determine any gene loss and/or gain. 
 
 ## Table of Contents
 * [Interleaving Reads](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#interleaving-reads)
@@ -280,3 +281,9 @@ I submitted an additional binning job, deservingly called binning_2.qsub using M
 ```
 module load MetaBAT/20170607
 ```
+#### 12 June 2017
+My binning job aborted! I'm thinking it's because of the 'cd' in metabat -i cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/final.contigs.fa so I deleted that and re-submitted the job.
+
+binning_2 still hadn't executed so I changed it in that job script as well.
+
+Also changed ppn=40 from ppn=20.

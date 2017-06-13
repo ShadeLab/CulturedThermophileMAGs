@@ -299,6 +299,12 @@ So I tried running the commands from the script separately just to see if they w
 Lots of progress today!
 Spent a lot time yesterday just trying to install CheckM so that I could quality control and determine taxonomy, but apparently installing programs on the HPCC is much more complicated than I would have ever imagined.
 This morning, I struggled a bit with the CheckM installation again. I tried updating it and it didn't work, but maybe it finished updating eventually or something because it worked even though I didn't change anything some time later (s/o to Pat at the HPCC center & Jackson for trying to troubleshoot what was wrong even though apparently nothing was).
+One thing to note is remembering to load HMMER, pplacer and prodigal using module load, something like this: 
+```
+module load HMMER
+module load pplacer
+module load prodigal
+```
 
 So now that I got CheckM to work, I did everything in the command line. It took a few minutes but nothing too bad. Here are the commands I used for the very specific bins for CheckM:
 ```

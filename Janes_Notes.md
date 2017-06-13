@@ -292,11 +292,9 @@ Also changed ppn=40 from ppn=20.
 Also check out this cool [link](https://wiki.gacrc.uga.edu/wiki/MetaBAT-Sapelo)
 with some tips!
 
-
-# CheckM
-#### 12 June 2017
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
 
+# CheckM
 #### 13 June 2017
 Lots of progress today!
 Spent a lot time yesterday just trying to install CheckM so that I could quality control and determine taxonomy, but apparently installing programs on the HPCC is much more complicated than I would have ever imagined.

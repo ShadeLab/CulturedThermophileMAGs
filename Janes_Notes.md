@@ -312,9 +312,9 @@ CheckM/lineage.ms CheckM/ > CheckM_Results.txt
 ```
 The results text file looks something like this:
 
-|Bin ID| Marker lineage| # genomes| # marker sets| 0 | 1 | 2 | 3 | 4 | 5+ | Completeness| Contamination| Strain heterogeneity|
+| Bin ID | Marker lineage| # genomes | # marker sets | 0 | 1 | 2 | 3 | 4 | 5+ | Completeness | Contamination | Strain heterogeneity |
 
-|METABAT_VerySpecific_Trial.1 | k__Bacteria (UID3187) | 2258 | 181 | 110 | 9 | 165 | 7 | 0 | 0 | 0 | 94.94 | 6.36 | 14.29 |      
+| METABAT_VerySpecific_Trial.1 | k__Bacteria (UID3187) | 2258 | 181 | 110 | 9 | 165 | 7 | 0 | 0 | 0 | 94.94 | 6.36 | 14.29 |      
 | METABAT_VerySpecific_Trial.2 | k__Bacteria (UID1452)| 924 | 161 | 108 | 50 | 110 | 1 | 0 | 0 | 0 | 67.18 | 0.93 | 0.00 |       
-| METABAT_VerySpecific_Trial.4 |k__Bacteria (UID3187) |2258 | 190 |119 | 83 | 96 | 11 | 0 | 0 |0 |56.64 |5.47 | 18.18          
+| METABAT_VerySpecific_Trial.4 | k__Bacteria (UID3187) | 2258 | 190 |119 | 83 | 96 | 11 | 0 | 0 |0 | 56.64 | 5.47 | 18.18          
 | METABAT_VerySpecific_Trial.3 | k__Bacteria (UID203)|5449 |104 | 58 | 35 | 41 | 22 | 6 | 0 | 0 | 54.53 | 9.17 | 32.50 |

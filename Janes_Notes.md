@@ -291,6 +291,28 @@ Also changed ppn=40 from ppn=20.
 Also check out this cool [link](https://wiki.gacrc.uga.edu/wiki/MetaBAT-Sapelo)
 with some tips!
 
+
+# CheckM
+#### 12 June 2017
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb.
 
-I tried installing CheckM for quality control and to determine the taxonomy of the bins, but installing that was an absolute disaster. Went down to the HPCC help desk, tried to work through it, but now waiting on response.
+#### 13 June 2017
+Lots of progress today!
+Spent a lot time yesterday just trying to install CheckM so that I could quality control and determine taxonomy, but apparently installing programs on the HPCC is much more complicated than I would have ever imagined.
+This morning, I struggled a bit with the CheckM installation again. I tried updating it and it didn't work, but maybe it finished updating eventually or something because it worked even though I didn't change anything some time later (s/o to Pat at the HPCC center & Jackson for trying to troubleshoot what was wrong even though apparently nothing was).
+
+So now that I got CheckM to work, I did everything in the command line. It took a few minutes but nothing too bad. Here are the commands I used for the very specific bins for CheckM:
+```
+checkm lineage_wf -t 8 -x fa Genome_Bins/ CheckM/
+```
+I had to make a new directory for the program to write into, CheckM. This directory must be completely empty in order for it to work.
+I then put the summary into a file so I could keep it:
+```
+CheckM/lineage.ms CheckM/ > CheckM_Results.txt
+```
+The results text file looks something like this:
+|Bin ID| Marker lineage| # genomes| # marker sets| 0 | 1 | 2 | 3 | 4 | 5+ | Completeness| Contamination| Strain heterogeneity|
+|METABAT_VerySpecific_Trial.1 | k__Bacteria (UID3187) | 2258 | 181 | 110 | 9 | 165 | 7 | 0 | 0 | 0 | 94.94 | 6.36 | 14.29 |      
+| METABAT_VerySpecific_Trial.2 | k__Bacteria (UID1452)| 924 | 161 | 108 | 50 | 110 | 1 | 0 | 0 | 0 | 67.18 | 0.93 | 0.00 |       
+| METABAT_VerySpecific_Trial.4 |k__Bacteria (UID3187) |2258 | 190 |119 | 83 | 96 | 11 | 0 | 0 |0 |56.64 |5.47 | 18.18          
+| METABAT_VerySpecific_Trial.3 | k__Bacteria (UID203)|5449 |104 | 58 | 35 | 41 | 22 | 6 | 0 | 0 | 54.53 | 9.17 | 32.50 |

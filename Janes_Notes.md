@@ -294,7 +294,7 @@ with some tips!
 
 # CheckM
 #### 12 June 2017
-So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb.
+So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
 
 #### 13 June 2017
 Lots of progress today!
@@ -308,6 +308,19 @@ checkm lineage_wf -t 8 -x fa Genome_Bins/ CheckM/
 I had to make a new directory for the program to write into, CheckM. This directory must be completely empty in order for it to work.
 I then put the summary into a file so I could keep it:
 ```
-CheckM/lineage.ms CheckM/ > CheckM_Results.txt
+checkm qa CheckM/lineage.ms CheckM/ > CheckM_Results.txt
 ```
-The result text file has the bin ID, the marker lineage, # genomes, # markers, # marker sets, 0, 1, 2, 3, 4, 5+, Completeness, Contamination and Strain heterogeneity. For my 4 bins, it looks like completeness is between 54.53 and 94.94, which I think (?) is pretty good? All contamination values are below 10, which is good too. 
+The result text file has the bin ID, the marker lineage, # genomes, # markers, # marker sets, 0, 1, 2, 3, 4, 5+, Completeness, Contamination and Strain heterogeneity. For my 4 bins, it looks like completeness is between 54.53 and 94.94, which I think (?) is pretty good? All contamination values are below 10, which is good too.
+
+However, I ran the MetaBAT job script again with the 2017 version, using the very sensitive tag instead of very specific, because it's better for more simple communities.
+Here are the commands:
+```
+module load GNU/4.8.3
+module load MetaBAT/20170607
+cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
+metabat -i /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/final.contigs.fa -v -a depth.txt -o METABAT_VerySensitive --saveTNF saved.tnf --saveDistance saved.dist -t 40 --verysensitive
+```
+This gave me 12 bins! I ran CheckM on this as well, and my results are in /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning/CheckM_Sensitive.
+These bins have much more varying completenesses, but other than 2 contamination values of 13.56 and 29.95, they're below 6.36! Although to be fair, the completeness level is lower on this own than on the very specific bins.
+
+So I thought I would try using the 2017 version of MetaBAT with the very specific bins. I got 5 bins this time! The only different thing between the CheckM results from the 2016 MetaBAT and the 2017 MetaBAT seems to be well 1) there is one more bin from the 2017 one and 2) that bin is root(U1D1) (?) and its completeness is only 4.17 with 0 contamination. 

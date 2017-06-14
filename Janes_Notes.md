@@ -299,7 +299,7 @@ So I tried running the commands from the script separately just to see if they w
 Lots of progress today!
 Spent a lot time yesterday just trying to install CheckM so that I could quality control and determine taxonomy, but apparently installing programs on the HPCC is much more complicated than I would have ever imagined.
 This morning, I struggled a bit with the CheckM installation again. I tried updating it and it didn't work, but maybe it finished updating eventually or something because it worked even though I didn't change anything some time later (s/o to Pat at the HPCC center & Jackson for trying to troubleshoot what was wrong even though apparently nothing was).
-One thing to note is remembering to load HMMER, pplacer and prodigal using module load, something like this: 
+One thing to note is remembering to load HMMER, pplacer and prodigal using module load, something like this:
 ```
 module load HMMER
 module load pplacer
@@ -329,3 +329,33 @@ This gave me 12 bins! I ran CheckM on this as well, and my results are in /mnt/l
 These bins have much more varying completenesses, but other than 2 contamination values of 13.56 and 29.95, they're below 6.36! Although to be fair, the completeness level is lower on this own than on the very specific bins.
 
 So I thought I would try using the 2017 version of MetaBAT with the very specific bins. I got 5 bins this time! The only different thing between the CheckM results from the 2016 MetaBAT and the 2017 MetaBAT seems to be well 1) there is one more bin from the 2017 one and 2) that bin is root(U1D1) (?) and its completeness is only 4.17 with 0 contamination.
+
+#### 14 June 2017
+Today I downloaded the very specific 2016 CheckM result file and after much struggling to get it formatted correctly, I had it in a .csv format in Excel before I could read it into R. Although since for this one there is only 4 bins I could just look at it to sort the bins based on the thresholds but it was a good exercise to get familiar with R. Here is what I put in R:
+```
+setwd("/Users/janelee/Documents/MSU_REU/CheckM")
+CheckM_Specific <- read.csv("CheckM_Results.csv")
+CheckM_Specific <- as.data.frame(CheckM_Specific)
+CheckM_Specific
+Clean_Contam <- CheckM_Specific[CheckM_Specific$Contamination<5,]
+Clean_Contam
+Clean_Complete <- CheckM_Specific[CheckM_Specific$Completeness>90,]
+Clean_Complete
+Clean <- Clean_Contam[Clean_Contam$Completeness>90,]
+Clean
+```
+I get one bin each for when contamination < 5 and for when completeness > 90, but no bins for both contamination < 5 and completeness > 90. Since there are only 4 bins I could have easily just looked at it as well. The most complete bin has a contamination value of 6.37 while the least contaminated bin has a completeness value of 67.18.
+
+I read my very sensitive CheckM file into R and did the formatting a little differently which made it much easier.
+```
+setwd("/Users/janelee/Documents/MSU_REU/CheckM")
+CheckM_Sensitive <- read.table("CheckM_VerySensitive_Results.txt", header=FALSE, blank.lines.skip = TRUE)
+CheckM_Sensitive <- as.data.frame(CheckM_Sensitive)
+colnames(CheckM_Sensitive)<- c("BinID", "MarkerLineage", "#Genomes", "#Markers", "#MarkerSets", "0","1", "2", "3", "4", "5+", "Completeness", "Contamination", "StrainHeterogeneity")
+CheckM_Sensitive
+Clean_Contamination <- CheckM_Sensitive[CheckM_Sensitive$Contamination<5,]
+Clean_Contamination
+Clean_Complete <- CheckM_Sensitive[CheckM_Sensitive$Completeness>90,]
+Clean_Complete
+```
+For these bins, 9 of them have a contamination level less that 5, but the highest completeness is 69.03, and the second highest completeness is 20.61. There was only one bin that had a completeness level greater than 90, at 95.4. The contamination is 6.36. The Marker Lineage, k__Bacteria(UID3187), is the same for this bin as the bin above from the very specific bins. k__Bacteria(UID3187), under very specific and very sensitive flags, has a > 90 completeness value and ~6.36 contamination value in both bins. 

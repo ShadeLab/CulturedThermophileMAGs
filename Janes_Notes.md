@@ -13,6 +13,7 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [Converting .sam to .bam](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#converting-sam-to-bam)
 * [Binning](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#binning)
 * [CheckM](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#checkm)
+* [MiGA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#miga)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
@@ -365,4 +366,4 @@ For these bins, 9 of them have a contamination level less that 5, but the highes
 I downloaded the most complete genome of the very specific genomes (k__Bacteria(UID3187)) and uploaded it to MiGA's NCBI Prok to "query the NCBI Genome database (Prokaryotes) with your own genomes to determine the most likely taxonomic classification and novelty rank" ([MiGA](http://enve-omics.ce.gatech.edu:3000/)). MiGA is still currently running and I'm not sure how long it's going to take.
 
 #### 15 June 2017
-Last night I uploaded the remaining 3 bins with the very specific tag, and they were all finished by this morning. MiGA gives you the closest relative in the MiGA database, the taxonomy of the genome, starting from domain down to subspecies, with p-values. It additionally gives you a completeness %, contamination %, a quality score # of predicted proteins, average length (amino acids), total number of contigs, and total length (in base pairs). 
+Last night I uploaded the remaining 3 bins with the very specific tag, and they were all finished by this morning. MiGA gives you the closest relative in the MiGA database, the taxonomy of the genome, starting from domain down to subspecies, with p-values. It additionally gives you a completeness %, contamination %, a quality score # of predicted proteins, average length (amino acids), total number of contigs, and total length (in base pairs).

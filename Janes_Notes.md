@@ -390,6 +390,7 @@ I downloaded the most complete genome of the very specific genomes (k__Bacteria(
 #### 15 June 2017
 Last night I uploaded the remaining 3 bins with the very specific tag, and they were all finished by this morning. MiGA gives you the closest relative in the MiGA database, the taxonomy of the genome, starting from domain down to subspecies, with p-values. It additionally gives you a completeness %, contamination %, a quality score # of predicted proteins, average length (amino acids), total number of contigs, and total length (in base pairs).
 
+## Coverage
 #### 16 June 2017
 Today I got the coverage files of each of my sensitive bins. I submitted a job for it, and it was really fast. However, my qsub script just calls on a shell script in /mnt/ls15/scratch/users/f0002184/Genome_Binning, called Get_Coverage.sh because running the shell script by itself took too long:
 ```
@@ -411,4 +412,4 @@ Genome_Binning additionally contains the Genome_Bins_Sensitive directory with al
 
 This gave me a directory, CPR_Bin_Coverage, full of files named like so: Coverage.METABAT_VerySensitive.1, Coverage.METABAT_VerySensitive.10, etc. These coverage files are essentially a reduced depth file for each bin, only with the present contigs in each bin. I can then read each coverage file into R, find the average coverage of each bin and see how the abundances differ from each bin to site!!!!!!! VERY EXCITE!!!!!!
 
-I also did the same coverage process with the 4 specific bins. I could actually just run the shell script instead of submitting a job for this one. 
+I also did the same coverage process with the 4 specific bins. I could actually just run the shell script instead of submitting a job for this one.

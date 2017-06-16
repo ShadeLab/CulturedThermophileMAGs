@@ -45,6 +45,28 @@ This job script, called interleave.qsub can be found in /mnt/ls15/scratch/users/
 
 The results were one file, named combined_reads.fastq, and are in the same directory with 51 Gb.
 
+#### 16 June 2017
+I am interleaving another dataset, extracted DNA of thermophiles from Cen13 (same site as previous dataset) that was not cultured.
+The job script is the same, just with the different file names of course. I will be doing the same procedure on this dataset as I did with the previous.
+```
+#! /bin/bash
+
+#PBS -l walltime=8:00:00
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=100 Gb
+#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+#PBS -N Interleave_Reads_mgDNA
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+module load GNU/4.8.2
+module load khmer/2.0
+cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq.gz
+gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq.gz
+interleave-reads.py Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq -o combined_reads_mgDNA.fastq
+```
+
 ## Quality Control of the Reads
 Once I got my combined reads file, I used software fastx in order to quality control and eliminate reads with 51% or greater q-scores less than 30 (meaning 1 in 1000 errors).
 
@@ -367,3 +389,26 @@ I downloaded the most complete genome of the very specific genomes (k__Bacteria(
 
 #### 15 June 2017
 Last night I uploaded the remaining 3 bins with the very specific tag, and they were all finished by this morning. MiGA gives you the closest relative in the MiGA database, the taxonomy of the genome, starting from domain down to subspecies, with p-values. It additionally gives you a completeness %, contamination %, a quality score # of predicted proteins, average length (amino acids), total number of contigs, and total length (in base pairs).
+
+#### 16 June 2017
+Today I got the coverage files of each of my sensitive bins. I submitted a job for it, and it was really fast. However, my qsub script just calls on a shell script in /mnt/ls15/scratch/users/f0002184/Genome_Binning, called Get_Coverage.sh because running the shell script by itself took too long:
+```
+for item in $(<CPR_Bins.txt)
+do
+        grep ">" Genome_Bins_Sensitive/${item}.fa > ${item}_headers.txt
+        sed -i -e 's/>//g' ${item}_headers.txt
+        head -n 1 depth.txt > Coverage.${item}
+        for file in $(<${item}_headers.txt)
+        do
+                grep -w -m 1 "${file}" depth.txt >> Coverage.${item}
+        done
+        rm ${item}_headers.txt
+        mv Coverage.${item} CPR_Bin_Coverage/
+done
+```
+CPR_Bins.txt is a text file with simply a list of the bins I got from the very sensitive tag, so for example, METABAT_VerySensitive.1, METABAT_VerySensitive.2, etc.
+Genome_Binning additionally contains the Genome_Bins_Sensitive directory with all the bins I got from MetaBAT. depth.txt is also in Genome_Binning, which I got from above (9 July 2017). I then created a directory, CPR_Bin_Coverage, so that the shell script can move my results into that directory.
+
+This gave me a directory, CPR_Bin_Coverage, full of files named like so: Coverage.METABAT_VerySensitive.1, Coverage.METABAT_VerySensitive.10, etc. These coverage files are essentially a reduced depth file for each bin, only with the present contigs in each bin. I can then read each coverage file into R, find the average coverage of each bin and see how the abundances differ from each bin to site!!!!!!! VERY EXCITE!!!!!!
+
+I also did the same coverage process with the 4 specific bins.  

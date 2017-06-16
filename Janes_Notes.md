@@ -411,4 +411,4 @@ Genome_Binning additionally contains the Genome_Bins_Sensitive directory with al
 
 This gave me a directory, CPR_Bin_Coverage, full of files named like so: Coverage.METABAT_VerySensitive.1, Coverage.METABAT_VerySensitive.10, etc. These coverage files are essentially a reduced depth file for each bin, only with the present contigs in each bin. I can then read each coverage file into R, find the average coverage of each bin and see how the abundances differ from each bin to site!!!!!!! VERY EXCITE!!!!!!
 
-I also did the same coverage process with the 4 specific bins.  
+I also did the same coverage process with the 4 specific bins. I could actually just run the shell script instead of submitting a job for this one. 

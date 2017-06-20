@@ -258,6 +258,7 @@ The .sam files seem to be around 50-60Gb.
 
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
 
+___
 ## Binning
 #### 9 June 2017
 Everything has been converted to BAM files and copied to my BAM_Files directory!
@@ -326,6 +327,7 @@ with some tips!
 
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
 
+___
 ## CheckM
 #### 13 June 2017
 Lots of progress today!
@@ -399,6 +401,7 @@ I downloaded the most complete genome of the very specific genomes (k__Bacteria(
 #### 15 June 2017
 Last night I uploaded the remaining 3 bins with the very specific tag, and they were all finished by this morning. MiGA gives you the closest relative in the MiGA database, the taxonomy of the genome, starting from domain down to subspecies, with p-values. It additionally gives you a completeness %, contamination %, a quality score # of predicted proteins, average length (amino acids), total number of contigs, and total length (in base pairs).
 
+___
 ## Coverage
 #### 16 June 2017
 Today I got the coverage files of each of my sensitive bins. I submitted a job for it, and it was really fast. However, my qsub script just calls on a shell script in /mnt/ls15/scratch/users/f0002184/Genome_Binning, called Get_Coverage.sh because running the shell script by itself took too long:

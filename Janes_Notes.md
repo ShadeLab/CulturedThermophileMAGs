@@ -14,6 +14,8 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [Binning](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#binning)
 * [CheckM](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#checkm)
 * [MiGA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#miga)
+* [Coverage](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#coverage)
+* [Aggregated Abundances](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#aggregated-abundances)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
@@ -66,7 +68,7 @@ gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq.gz
 gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq.gz
 interleave-reads.py Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq -o combined_reads_mgDNA.fastq
 ```
-Everything to do with my second dataset can be found under /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA. 
+Everything to do with my second dataset can be found under /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA.
 
 ## Quality Control of the Reads
 Once I got my combined reads file, I used software fastx in order to quality control and eliminate reads with 51% or greater q-scores less than 30 (meaning 1 in 1000 errors).

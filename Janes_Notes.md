@@ -66,6 +66,7 @@ gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq.gz
 gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq.gz
 interleave-reads.py Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq -o combined_reads_mgDNA.fastq
 ```
+Everything to do with my second dataset can be found under /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA. 
 
 ## Quality Control of the Reads
 Once I got my combined reads file, I used software fastx in order to quality control and eliminate reads with 51% or greater q-scores less than 30 (meaning 1 in 1000 errors).
@@ -89,6 +90,9 @@ fastq_quality_filter -Q33 -q 30 -p 50 -i combined_reads.fastq -o combined_filter
 ```
 The job script can be found in the same directory. Its name is quality_filter.qsub. The results from this job is a FASTQ file, called combined_filtered.fastq. This file size is 42 Gb, so about 9 Gb of data were eliminated.
 
+#### 19 June 2017
+My second dataset quality control is finished! I used the same thresholds on this dataset. The combined_reads_mgDNA.fastq file was 53 Gb, and the combined_filtered_mgDNA.fastq one is 47 Gb, so ~6 Gb of data were eliminated.
+
 ## Extracting Match-Paired Reads
 Continuing from the filtered data, I had to filter the data more so that I have a file with only paired reads, since filtering the reads by q-scores may have gotten rid of a reverse read or a forward read without eliminating its pair. I did this by submitting the job script below, called Match_Paired_Culture.qsub in the same directory.
 
@@ -111,6 +115,9 @@ extract-paired-reads.py combined_filtered.fastq
 ```
 
 The result of this job is two files, combined_filtered.fastq.pe (pe for paired end) of 34 Gb and combined_filtered.fastq.se (se for single end) of 7.4 Gb. I will only use the paired end file.
+
+#### 20 June 2017
+I submitted a job for my second dataset in order to extract the paired end reads.
 
 ## Assembling the Paired Reads
 Lastly, I used the paired end data file in order to assemble the reads into contigs by submitting another job. I wrote a script for this, called megahit.qsub in the same directory, found below.
@@ -413,3 +420,23 @@ Genome_Binning additionally contains the Genome_Bins_Sensitive directory with al
 This gave me a directory, CPR_Bin_Coverage, full of files named like so: Coverage.METABAT_VerySensitive.1, Coverage.METABAT_VerySensitive.10, etc. These coverage files are essentially a reduced depth file for each bin, only with the present contigs in each bin. I can then read each coverage file into R, find the average coverage of each bin and see how the abundances differ from each bin to site!!!!!!! VERY EXCITE!!!!!!
 
 I also did the same coverage process with the 4 specific bins. I could actually just run the shell script instead of submitting a job for this one.
+
+## Aggregated Abundances
+#### 20 June 2017
+I copied over the coverage files from the HPCC onto my local computer using FileZilla in order to read them in into R to find the aggregated abundances of each contig in each bin for every site. I did this on both my --veryspecific and --verysensitive tagged coverage files. The code in R looks like this for my specific files:
+```
+setwd("/Users/janelee/Documents/MSU_REU/Coverage_Specific")
+Cov_Spec_1 <- read.table("Coverage.METABAT_VerySpecific_Trial.1", sep="\t", header=T)
+Cov_Spec_2 <- read.table("Coverage.METABAT_VerySpecific_Trial.2", sep="\t", header=T)
+Cov_Spec_3 <- read.table("Coverage.METABAT_VerySpecific_Trial.3", sep="\t", header=T)
+Cov_Spec_4 <- read.table("Coverage.METABAT_VerySpecific_Trial.4", sep="\t", header=T)
+
+CSpec1 <- (colSums(Cov_Spec_1[,seq(4,27,2)]))
+CSpec2 <- (colSums(Cov_Spec_2[,seq(4,27,2)]))
+CSpec3 <- (colSums(Cov_Spec_3[,seq(4,27,2)]))
+CSpec4 <- (colSums(Cov_Spec_4[,seq(4,27,2)]))
+
+total <- rbind(CSpec1, CSpec2, CSpec3, CSpec4)
+total
+```
+I'm sure there is a shorter way to do this using a loop, but since I'm still not entirely familiar with R, I did each step manually.

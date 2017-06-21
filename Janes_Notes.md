@@ -141,6 +141,9 @@ megahit --12 combined_filtered.fastq.pe --k-list 27,37,47,57,67,77,87,97,107 -o 
 ```
 The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. The size of this file is 1.1 Gb. I made a copy of this file just in case and copied it into my original directory.
 
+#### 21 June 2017
+The second dataset paired reads were extracted, so I submitted the job to assemble the contigs! Whoohoo!
+
 ## MetaQUAST
 I used MetaQuast to get summary statistics on the assembled contigs using MetaQUAST version 2.3. I created a new directory called quast-2.3, where I loaded and executed the program interactively.
 ```

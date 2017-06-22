@@ -16,7 +16,7 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [MiGA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#miga)
 * [Coverage](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#coverage)
 * [Aggregated Abundances](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#aggregated-abundances)
-* [Prokka and BlastKOALA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#prokka-and-blast-koala)
+* [Prokka and BlastKOALA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#prokka-and-blastkoala)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads

@@ -143,6 +143,8 @@ The job ran overnight and it was done around noon. The result is a directory, ca
 
 #### 21 June 2017
 The second dataset paired reads were extracted, so I submitted the job to assemble the contigs! Whoohoo!
+#### 22 June 2017
+The job to assemble the contigs begun execution today. 
 
 ## MetaQUAST
 I used MetaQuast to get summary statistics on the assembled contigs using MetaQUAST version 2.3. I created a new directory called quast-2.3, where I loaded and executed the program interactively.
@@ -448,3 +450,16 @@ total <- rbind(CSpec1, CSpec2, CSpec3, CSpec4)
 total
 ```
 I'm sure there is a shorter way to do this using a loop, but since I'm still not entirely familiar with R, I did each step manually.
+
+## Prokka and Blast Koala
+#### 22 June 2017
+Today I worked with my bins on Prokka, a gene annotation program.
+I didn't use a job for any of my bins and ran everything from my command line, even though the bigger ones took a few minutes. Here are the steps:
+````
+module load prokka
+prokka METABAT_VerySensitive.1.fa --outdir Sensitive_Annotation_1 --prefix Sensitive_Annotation_1
+```
+I ran this from my Prokka directory: /mnt/ls15/scratch/users/f0002184/Prokka.
+The command creates a new output directory, Sensitive_Annotation_1 in this case, which contains several files of different formats. As for now, I'll primarily be working with the .faa file. Here is a [link](https://github.com/tseemann/prokka#output-files) to what each of these output files are.
+
+I've uploaded Specific_1.faa to [BlastKOALA](http://www.kegg.jp/blastkoala/) for further gene annotation. However, I am only allowed to have one job requested/submitted at a time, so this may take a while, depending on how long each .faa file takes.

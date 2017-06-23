@@ -184,8 +184,10 @@ Since I have the final.contigs.fa file in my original directory, I made a new di
 ```
 cp final.contigs.fa /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 ```
+#### 23 June 2017
+The second dataset contigs finished assembly, so I copied the final.contigs.fa file into /mny/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping to start mapping.
 
-## Indexing the Contigs
+### Indexing the Contigs
 I used a job to do this. It was very speedy! Only 3 minutes or so.
 ```
 #! /bin/bash
@@ -205,6 +207,9 @@ bbmap.sh ref=final.contigs.fa build=1 -Xmx215g
 ```
 This job is called index_assembled_contigs.qsub in the MAPPING_MEGA_ASSEMBLY directory.
 It created a directory called ref, in which there are two directories, genome and index, in which there is a directory called 1 in each of them, where there are files for chrom1-3, and in /genome/1/ there is an info.txt file and a summary.txt file. The entire ref directory is 33 Gb.
+
+#### 23 June 2017
+I submitted a job to index the contigs from the second dataset, which similarly took a very short time.
 
 ## Mapping Reads from Cen01, Cen03, Cen04, Cen05, Cen06, Cen07, Cen10, Cen12, Cen14, Cen15, Cen16, and Cen17
 I copied the reads from all the other Centralia sites from /mnt/research/ShadeLab/Sorensen/JGI_Metagenomes/ into the MAPPING_MEGA_ASSEMBLY directory. They all vary in size.
@@ -226,6 +231,9 @@ module load bbmap
 cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
 ```
+
+#### 23 June 2017
+I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping for mapping.
 
 ## Converting .sam to .bam
 #### 6 June 2017
@@ -452,6 +460,25 @@ total
 ```
 I'm sure there is a shorter way to do this using a loop, but since I'm still not entirely familiar with R, I did each step manually.
 
+#### 23 June 2017
+Today I am working on fixing my R code to be more efficient and succinct by using for loops. I've never really worked in R before especially with this kind of data, so it's a slight struggle with lots to fix but lots to learn! Additionally, I was supposed to find the average of the column sums instead of the column sums, so the code should look like this below:
+```
+setwd("/Users/janelee/Documents/MSU_REU/Coverage_Specific")
+Cov_Spec_1 <- read.table("Coverage.METABAT_VerySpecific_Trial.1", sep="\t", header=T)
+Cov_Spec_2 <- read.table("Coverage.METABAT_VerySpecific_Trial.2", sep="\t", header=T)
+Cov_Spec_3 <- read.table("Coverage.METABAT_VerySpecific_Trial.3", sep="\t", header=T)
+Cov_Spec_4 <- read.table("Coverage.METABAT_VerySpecific_Trial.4", sep="\t", header=T)
+
+CSpec1 <- (colSums(Cov_Spec_1[,seq(4,27,2)])/nrow(Cov_Spec_1))
+CSpec2 <- (colSums(Cov_Spec_2[,seq(4,27,2)])/nrow(Cov_Spec_2))
+CSpec3 <- (colSums(Cov_Spec_3[,seq(4,27,2)])/nrow(Cov_Spec_3))
+CSpec4 <- (colSums(Cov_Spec_4[,seq(4,27,2)])/nrow(Cov_Spec_4))
+
+total <- rbind(CSpec1, CSpec2, CSpec3, CSpec4)
+total
+```
+However I am in the process of cleaning it up, so that is not what my current R console looks like. Updated code is soon to follow!
+
 ## Prokka and BlastKOALA
 #### 22 June 2017
 Today I worked with my bins on Prokka, a gene annotation program.
@@ -464,3 +491,8 @@ I ran this from my Prokka directory: /mnt/ls15/scratch/users/f0002184/Prokka.
 The command creates a new output directory, Sensitive_Annotation_1 in this case, which contains several files of different formats. As for now, I'll primarily be working with the .faa file. Here is a [link](https://github.com/tseemann/prokka#output-files) to what each of these output files are.
 
 I've uploaded Specific_1.faa to [BlastKOALA](http://www.kegg.jp/blastkoala/) for further gene annotation. However, I am only allowed to have one job requested/submitted at a time, so this may take a while, depending on how long each .faa file takes.
+
+## Correlation in R
+#### 23 June 2017
+Using the code from above, I ran a few statistical tests on the metadata, from [here](https://github.com/ShadeLab/CentraliaThermophiles/blob/master/Workflow/Centralia_Collapsed_Map_forR.txt).
+At an alpha level of 0.05, the Specific_2 bin seems to be significant when tested with soil temperatures, nothing is significant with sulfate and nitrate, but Specific_1 and Specific_2 are significant with air temperature which is interesting.

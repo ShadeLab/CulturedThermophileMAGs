@@ -279,6 +279,9 @@ The .sam files seem to be around 50-60Gb.
 
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
 
+#### 26 June 2017
+Jobs to convert .sam to .bam for the second dataset for the first 11 sites have been submitted. Will submit the job to convert Cen12_MA.sam to .bam as soon as it is ready. These jobs can be found in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping. 
+
 ___
 ## Binning
 #### 9 June 2017
@@ -502,7 +505,7 @@ I've uploaded Specific_1.faa to [BlastKOALA](http://www.kegg.jp/blastkoala/) for
 #### 26 June 2017
 It looks like these .faa files in blastKOALA are taking a while. Over the weekend, I've been uploading new .faa files as they've completed. I have Specific1 and Specific2 done, with Specific3 uploaded now.
 
-All the Specific bins finished. Uploading Sensitive1. 
+All the Specific bins finished. Uploading Sensitive1.
 
 ## Correlation in R
 #### 23 June 2017

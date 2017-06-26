@@ -239,6 +239,9 @@ I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch
 #### 25 June 2017
 Jobs for the 12 uncultured sites for mapping submitted!
 
+#### 26 June 2017
+Many of the jobs have begun and terminated, so it looks like the mapping will be done today for the second dataset.
+
 ## Converting .sam to .bam
 #### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.
@@ -496,7 +499,12 @@ The command creates a new output directory, Sensitive_Annotation_1 in this case,
 
 I've uploaded Specific_1.faa to [BlastKOALA](http://www.kegg.jp/blastkoala/) for further gene annotation. However, I am only allowed to have one job requested/submitted at a time, so this may take a while, depending on how long each .faa file takes.
 
+#### 26 June 2017
+It looks like these .faa files in blastKOALA are taking a while. Over the weekend, I've been uploading new .faa files as they've completed. I have Specific1 and Specific2 done, with Specific3 uploaded now.
+
+All the Specific bins finished. Uploading Sensitive1. 
+
 ## Correlation in R
 #### 23 June 2017
-Using the code from above, I ran a few statistical tests on the metadata, from [here](https://github.com/ShadeLab/CentraliaThermophiles/blob/master/Workflow/Centralia_Collapsed_Map_forR.txt).
+Using the code from above, I ran a few statistical tests on the [metadata](https://github.com/ShadeLab/CentraliaThermophiles/blob/master/Workflow/Centralia_Collapsed_Map_forR.txt).
 At an alpha level of 0.05, the Specific_2 bin seems to be significant when tested with soil temperatures, nothing is significant with sulfate and nitrate, but Specific_1 and Specific_2 are significant with air temperature which is interesting.

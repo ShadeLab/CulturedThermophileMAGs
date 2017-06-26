@@ -236,6 +236,9 @@ bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.f
 #### 23 June 2017
 I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping for mapping.
 
+#### 25 June 2017
+Jobs for the 12 uncultured sites for mapping submitted!
+
 ## Converting .sam to .bam
 #### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.

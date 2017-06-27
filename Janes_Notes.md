@@ -562,6 +562,7 @@ for(i in 1:12) {
 I read in each of my coverage files, renamed my columns with the actual bins, found the "total" data frame, which is the relative abundances of each bin, found by the aggregated abundance divided by the number of abundance rows, re-ordered my data frame because R put it in a different order, read in the metadata file and made a vector for the soil temperatures and ran correlation tests for each bin in regards to soil temperature.
 
 Here are the p-values:
+
 |Bin | p-value|
 | --------|:------------|
 |Sensitive 1 | 0.8721 |

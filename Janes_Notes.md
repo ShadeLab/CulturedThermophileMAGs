@@ -513,7 +513,7 @@ Using the code from above, I ran a few statistical tests on the [metadata](https
 
 P-values for specific data:
 |Bin        | p-value|
-|:-------- :|:------:|
+| --- | --- |
 |Specific 1 | 0.7125 |
 |Specific 2 | 0.05247|
 |Specific 3 | 0.8897 |

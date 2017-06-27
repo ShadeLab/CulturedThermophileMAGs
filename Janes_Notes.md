@@ -280,7 +280,7 @@ The .sam files seem to be around 50-60Gb.
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
 
 #### 26 June 2017
-Jobs to convert .sam to .bam for the second dataset for the first 11 sites have been submitted. Will submit the job to convert Cen12_MA.sam to .bam as soon as it is ready. These jobs can be found in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping. 
+Jobs to convert .sam to .bam for the second dataset for the first 11 sites have been submitted. Will submit the job to convert Cen12_MA.sam to .bam as soon as it is ready. These jobs can be found in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping.
 
 ___
 ## Binning
@@ -505,9 +505,74 @@ I've uploaded Specific_1.faa to [BlastKOALA](http://www.kegg.jp/blastkoala/) for
 #### 26 June 2017
 It looks like these .faa files in blastKOALA are taking a while. Over the weekend, I've been uploading new .faa files as they've completed. I have Specific1 and Specific2 done, with Specific3 uploaded now.
 
-All the Specific bins finished. Uploading Sensitive1.
+All the Specific bins finished. Starting the sensitive bins.
 
 ## Correlation in R
 #### 23 June 2017
 Using the code from above, I ran a few statistical tests on the [metadata](https://github.com/ShadeLab/CentraliaThermophiles/blob/master/Workflow/Centralia_Collapsed_Map_forR.txt).
-At an alpha level of 0.05, the Specific_2 bin seems to be significant when tested with soil temperatures, nothing is significant with sulfate and nitrate, but Specific_1 and Specific_2 are significant with air temperature which is interesting.
+
+P-values for specific data:
+|Bin | p-value|
+| --------|:------------|
+|Specific 1 | 0.7125 |
+|Specific 2 | 0.05247 |
+|Specific 3 | 0.8897 |
+|Specific 4 | 0.873|
+
+
+#### 27 June 2017
+I re-wrote my R script with for loops! Here is my sensitive version:
+```
+setwd("/Users/janelee/Documents/MSU_REU/Coverage_Sensitive/")
+
+x <- read.table("CPR_FileNames_Sensitive.txt", stringsAsFactors = FALSE)
+y <- NULL
+y <- as.list(y)
+for (i in 1:12){
+  y[[i]] <- read.table(paste(x[i,1]), sep="\t", stringsAsFactors = FALSE, header=TRUE)
+}
+names(y) <- x[,1]
+names(y)
+total <- NULL
+total <- as.data.frame(total)
+for(i in 1:12){
+  values <- ((colSums(y[[i]][,seq(4,27,2)]))/nrow(y[[i]]))
+  total <- rbind(total, values)
+}
+total
+
+row.names(total) <- x[,1]
+row.names(total)
+
+total2 <- total[c(1,5,6,7,8,9,10,11,12,2,3,4),]
+setwd("/Users/janelee/Documents/MSU_REU/")
+metadata <- read.table("Centralia_Collapsed_Map_forR.txt", sep="\t", header = T)
+metadata_edit <- metadata[-c(2, 8, 9, 11, 13, 18), ]
+metadata_edit
+
+soil_temp <- metadata_edit$SoilTemperature_to10cm
+soil_temp
+
+z <- NULL
+z <- as.list(z)
+for(i in 1:12) {
+  z[[i]] <- cor.test(soil_temp, as.numeric(total2[i,]))
+}
+```
+I read in each of my coverage files, renamed my columns with the actual bins, found the "total" data frame, which is the relative abundances of each bin, found by the aggregated abundance divided by the number of abundance rows, re-ordered my data frame because R put it in a different order, read in the metadata file and made a vector for the soil temperatures and ran correlation tests for each bin in regards to soil temperature.
+
+Here are the p-values:
+|Bin | p-value|
+| --------|:------------|
+|Sensitive 1 | 0.8721 |
+|Sensitive 2 | 0.7153 |
+|Sensitive 3 | 0.8816 |
+|Sensitive 4 | 0.05513|
+|Sensitive 5 | 0.04113|
+|Sensitive 6 | 0.1305 |
+|Sensitive 7 | 0.8976 |
+|Sensitive 8 | 0.06655|
+|Sensitive 9 | 0.9787 |
+|Sensitive 10 | 0.9714|
+|Sensitive 11 | 0.05075|
+|Sensitive 12 | 0.3981 |

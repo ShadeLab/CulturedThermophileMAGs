@@ -512,12 +512,12 @@ All the Specific bins finished. Starting the sensitive bins.
 Using the code from above, I ran a few statistical tests on the [metadata](https://github.com/ShadeLab/CentraliaThermophiles/blob/master/Workflow/Centralia_Collapsed_Map_forR.txt).
 
 P-values for specific data:
-|Bin | p-value|
-| --------|:------------|
+|Bin        | p-value|
+|:-------- :|:------:|
 |Specific 1 | 0.7125 |
-|Specific 2 | 0.05247 |
+|Specific 2 | 0.05247|
 |Specific 3 | 0.8897 |
-|Specific 4 | 0.873|
+|Specific 4 | 0.873  |
 
 
 #### 27 June 2017

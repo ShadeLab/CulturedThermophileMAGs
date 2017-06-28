@@ -351,6 +351,11 @@ with some tips!
 
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
 
+#### 28 June 2017
+My second dataset have all convered to .bam files, so I will index the .bam files, create the depth file and bin them. I used a job to bin them this time, and gave the job 3 hours.
+
+The jobs aborted! Changed walltime to 5 hours and resubmitted. 
+
 ___
 ## CheckM
 #### 13 June 2017
@@ -531,6 +536,7 @@ y <- as.list(y)
 for (i in 1:12){
   y[[i]] <- read.table(paste(x[i,1]), sep="\t", stringsAsFactors = FALSE, header=TRUE)
 }
+
 names(y) <- x[,1]
 names(y)
 total <- NULL
@@ -541,6 +547,10 @@ for(i in 1:12){
 }
 total
 
+column_names <- NULL
+column_names <- data.frame("Cen01_MA.bam", "Cen03_MA.bam", "Cen04_MA.bam", "Cen05_MA.bam", "Cen06_MA.bam", "Cen07_MA.bam", "Cen10_MA.bam", "Cen12_MA.bam", "Cen14_MA.bam", "Cen15_MA.bam", "Cen16_MA.bam", "Cen17_MA.bam")
+column <- t(column_names)
+colnames(total) <- column[,1]
 row.names(total) <- x[,1]
 row.names(total)
 
@@ -558,8 +568,9 @@ z <- as.list(z)
 for(i in 1:12) {
   z[[i]] <- cor.test(soil_temp, as.numeric(total2[i,]))
 }
+z
 ```
-I read in each of my coverage files, renamed my columns with the actual bins, found the "total" data frame, which is the relative abundances of each bin, found by the aggregated abundance divided by the number of abundance rows, re-ordered my data frame because R put it in a different order, read in the metadata file and made a vector for the soil temperatures and ran correlation tests for each bin in regards to soil temperature.
+I read in each of my coverage files, renamed my rows and columns, found the "total" data frame, which is the relative abundances of each bin, found by the aggregated abundance divided by the number of abundance rows, re-ordered my data frame because R put it in a different order, read in the metadata file and made a vector for the soil temperatures and ran correlation tests for each bin in regards to soil temperature.
 
 Here are the p-values:
 
@@ -577,3 +588,37 @@ Here are the p-values:
 |Sensitive 10 | 0.9714|
 |Sensitive 11 | 0.05075|
 |Sensitive 12 | 0.3981 |
+
+## Plots in R
+I've been working on plotting abundances vs temperature in R. A simple plot code looks like this:
+```
+for(i in 1:4) {
+plot(soil_temp, total[i,], xlab = "Temperature", ylab = "Abundance")
+}
+```
+Here is the code I used to make a bar graph. I made two bar graphs because I used different scalars.
+```
+total_transpose <- t(total)
+total_transpose
+
+total_reshape <- melt(total_transpose, id=c("Coverage.METABAT_VerySpecific_Trial.1", "Coverage.METABAT_VerySpecific_Trial.2", "Coverage.METABAT_VerySpecific_Trial.3", "Coverage.METABAT_VerySpecific_Trial.4"))
+total_reshape
+
+p <- ggplot(total_reshape, aes(x = Var1, y= value, group = as.factor(Var2)))
+p + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
+  theme(axis.text.x = element_text(angle = 50, hjust = 1)
+        ) +
+  labs(fill="Bins") +
+  xlab("Location") +
+  ylab("Abundance") +
+  coord_cartesian(ylim=c(0, .03))
+
+q <- ggplot(total_reshape, aes(x = Var1, y= value, group = as.factor(Var2)))
+q + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
+  theme(axis.text.x = element_text(angle = 50, hjust = 1)
+  ) +
+  labs(fill="Bins") +
+  xlab("Location") +
+  ylab("Abundance") +
+  coord_cartesian(ylim=c(0, 20))
+  ```

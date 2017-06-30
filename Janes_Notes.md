@@ -242,6 +242,13 @@ Jobs for the 12 uncultured sites for mapping submitted!
 #### 26 June 2017
 Many of the jobs have begun and terminated, so it looks like the mapping will be done today for the second dataset.
 
+#### 30 June 2017
+Today I'm going to re-map the reads from the other Centralia sites onto the both datasets at a minimum identity level of 0.95, instead of the default 0.76 level.
+
+So I've created a new directory, in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95 where I copied the final contigs .fa file from the second dataset as well as the reads from the Centralia sites. I will do this in /mnt/ls15/scratch/users/f0002184/MinID_95 for the first dataset with the first final contigs .fa file as well.
+
+I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
+
 ## Converting .sam to .bam
 #### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.
@@ -354,7 +361,15 @@ So I tried running the commands from the script separately just to see if they w
 #### 28 June 2017
 My second dataset have all convered to .bam files, so I will index the .bam files, create the depth file and bin them. I used a job to bin them this time, and gave the job 3 hours.
 
-The jobs aborted! Changed walltime to 5 hours and resubmitted. 
+The jobs aborted! Changed walltime to 5 hours and resubmitted.
+
+#### 30 June 2017
+The jobs aborted again, so I changed it to 2 days for walltime. However, Jackson said they shouldn't take that long and after some investigation, turns out my Cen03_MA.bam file is weird, yet again. Oops should've known especially since the final contigs final for the second dataset is smaller, only 174 Mb. Resubmitted the job for .sam to .bam for Cen03.
+Also I submitted a job for the depth file this time and mistakenly made an error in the job script. I included
+```
+tmux new -s METABAT
+```
+when I shouldn't have. Deleted those lines from my depth_2016.qsub and depth_2017.qsub files. Will resubmit once Cen03.bam is done.
 
 ___
 ## CheckM

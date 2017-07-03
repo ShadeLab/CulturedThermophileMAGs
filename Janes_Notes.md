@@ -249,6 +249,11 @@ So I've created a new directory, in /mnt/ls15/scratch/users/f0002184/Cen13_Poole
 
 I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
 
+#### 3 July 2017
+Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I copied in the ref file from indexing the contigs to the MinID_95 directory and resubmitted the jobs because the error files say that they couldn't locate a file from that directory it needs to map the reads.
+
+Also, re-submitted the sam to bam for Cen03 for the second dataset since it didn't copy over right the first time, then copied it over to the BAM_Files directory to re-run the depth files for the second dataset. Submitted jobs for both 2016 and 2017 versions of MetaBAT for second dataset with minID 0.76 for depth files. 
+
 ## Converting .sam to .bam
 #### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.

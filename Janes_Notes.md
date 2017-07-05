@@ -647,7 +647,25 @@ Today I'm going to re-map the reads from the other Centralia sites onto the both
 
 So I've created a new directory, in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95 where I copied the final contigs .fa file from the second dataset as well as the reads from the Centralia sites. I will do this in /mnt/ls15/scratch/users/f0002184/MinID_95 for the first dataset with the first final contigs .fa file as well.
 
-I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
+I've submitted the 12 mapping jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
+
+Here is the job script:
+```
+#! /bin/bash
+
+#PBS -l walltime=48:00:00
+#PBS -l mem=250Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95
+#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95
+#PBS -N map_Cen01_MA
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load bbmap
+cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95
+bbmap.sh in=/mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam minid=0.95
+```
 
 #### 3 July 2017
 Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I copied in the ref file from indexing the contigs to the MinID_95 directory and resubmitted the jobs because the error files say that they couldn't locate a file from that directory it needs to map the reads.

@@ -18,6 +18,8 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [Aggregated Abundances](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#aggregated-abundances)
 * [Prokka and BlastKOALA](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#prokka-and-blastkoala)
 * [Correlation in R](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#correlation-in-r)
+* [Uncultured DNA Dataset](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#uncultured-dna-dataset)
+* [Minimum ID 0.95 Datasets](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#minimum-id-095-datasets)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
@@ -651,4 +653,4 @@ I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured data
 Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I copied in the ref file from indexing the contigs to the MinID_95 directory and resubmitted the jobs because the error files say that they couldn't locate a file from that directory it needs to map the reads.
 
 #### 5 July 2017
-The mapping jobs for the second dataset at min ID 0.95 finished! Submitted jobs to convert the .sam files to .bam for the second dataset 0.95 min ID. 
+The mapping jobs for the second dataset at min ID 0.95 finished! Submitted jobs to convert the .sam files to .bam for the second dataset 0.95 min ID.

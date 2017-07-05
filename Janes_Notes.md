@@ -49,29 +49,6 @@ This job script, called interleave.qsub can be found in /mnt/ls15/scratch/users/
 
 The results were one file, named combined_reads.fastq, and are in the same directory with 51 Gb.
 
-#### 16 June 2017
-I am interleaving another dataset, extracted DNA of thermophiles from Cen13 (same site as previous dataset) that was not cultured.
-The job script is the same, just with the different file names of course. I will be doing the same procedure on this dataset as I did with the previous.
-```
-#! /bin/bash
-
-#PBS -l walltime=8:00:00
-#PBS -l nodes=1:ppn=8
-#PBS -l mem=100 Gb
-#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
-#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
-#PBS -N Interleave_Reads_mgDNA
-#PBS -M jlee4946@gmail.com
-#PBS -m abe
-module load GNU/4.8.2
-module load khmer/2.0
-cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
-gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq.gz
-gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq.gz
-interleave-reads.py Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq -o combined_reads_mgDNA.fastq
-```
-Everything to do with my second dataset can be found under /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA.
-
 ## Quality Control of the Reads
 Once I got my combined reads file, I used software fastx in order to quality control and eliminate reads with 51% or greater q-scores less than 30 (meaning 1 in 1000 errors).
 
@@ -93,9 +70,6 @@ cd /mnt/ls15/scratch/users/f0002184/
 fastq_quality_filter -Q33 -q 30 -p 50 -i combined_reads.fastq -o combined_filtered.fastq
 ```
 The job script can be found in the same directory. Its name is quality_filter.qsub. The results from this job is a FASTQ file, called combined_filtered.fastq. This file size is 42 Gb, so about 9 Gb of data were eliminated.
-
-#### 19 June 2017
-My second dataset quality control is finished! I used the same thresholds on this dataset. The combined_reads_mgDNA.fastq file was 53 Gb, and the combined_filtered_mgDNA.fastq one is 47 Gb, so ~6 Gb of data were eliminated.
 
 ## Extracting Match-Paired Reads
 Continuing from the filtered data, I had to filter the data more so that I have a file with only paired reads, since filtering the reads by q-scores may have gotten rid of a reverse read or a forward read without eliminating its pair. I did this by submitting the job script below, called Match_Paired_Culture.qsub in the same directory.
@@ -120,9 +94,6 @@ extract-paired-reads.py combined_filtered.fastq
 
 The result of this job is two files, combined_filtered.fastq.pe (pe for paired end) of 34 Gb and combined_filtered.fastq.se (se for single end) of 7.4 Gb. I will only use the paired end file.
 
-#### 20 June 2017
-I submitted a job for my second dataset in order to extract the paired end reads.
-
 ## Assembling the Paired Reads
 Lastly, I used the paired end data file in order to assemble the reads into contigs by submitting another job. I wrote a script for this, called megahit.qsub in the same directory, found below.
 
@@ -142,11 +113,6 @@ cd /mnt/ls15/scratch/users/f0002184/
 megahit --12 combined_filtered.fastq.pe --k-list 27,37,47,57,67,77,87,97,107 -o Megahit_QC_Assembly/ -t $PBS_NUM_PPN
 ```
 The job ran overnight and it was done around noon. The result is a directory, called Megahit_QC_Assembly. Within that directory, there is a .fa file called final.contigs.fa with the assembled contigs. The size of this file is 1.1 Gb. I made a copy of this file just in case and copied it into my original directory.
-
-#### 21 June 2017
-The second dataset paired reads were extracted, so I submitted the job to assemble the contigs! Whoohoo!
-#### 22 June 2017
-The job to assemble the contigs begun execution today.
 
 ## MetaQUAST
 I used MetaQuast to get summary statistics on the assembled contigs using MetaQUAST version 2.3. I created a new directory called quast-2.3, where I loaded and executed the program interactively.
@@ -185,8 +151,6 @@ Since I have the final.contigs.fa file in my original directory, I made a new di
 ```
 cp final.contigs.fa /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 ```
-#### 23 June 2017
-The second dataset contigs finished assembly, so I copied the final.contigs.fa file into /mny/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping to start mapping.
 
 ### Indexing the Contigs
 I used a job to do this. It was very speedy! Only 3 minutes or so.
@@ -209,9 +173,6 @@ bbmap.sh ref=final.contigs.fa build=1 -Xmx215g
 This job is called index_assembled_contigs.qsub in the MAPPING_MEGA_ASSEMBLY directory.
 It created a directory called ref, in which there are two directories, genome and index, in which there is a directory called 1 in each of them, where there are files for chrom1-3, and in /genome/1/ there is an info.txt file and a summary.txt file. The entire ref directory is 33 Gb.
 
-#### 23 June 2017
-I submitted a job to index the contigs from the second dataset, which similarly took a very short time.
-
 ## Mapping Reads from Cen01, Cen03, Cen04, Cen05, Cen06, Cen07, Cen10, Cen12, Cen14, Cen15, Cen16, and Cen17
 I copied the reads from all the other Centralia sites from /mnt/research/ShadeLab/Sorensen/JGI_Metagenomes/ into the MAPPING_MEGA_ASSEMBLY directory. They all vary in size.
 
@@ -232,27 +193,6 @@ module load bbmap
 cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
 ```
-
-#### 23 June 2017
-I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping for mapping.
-
-#### 25 June 2017
-Jobs for the 12 uncultured sites for mapping submitted!
-
-#### 26 June 2017
-Many of the jobs have begun and terminated, so it looks like the mapping will be done today for the second dataset.
-
-#### 30 June 2017
-Today I'm going to re-map the reads from the other Centralia sites onto the both datasets at a minimum identity level of 0.95, instead of the default 0.76 level.
-
-So I've created a new directory, in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95 where I copied the final contigs .fa file from the second dataset as well as the reads from the Centralia sites. I will do this in /mnt/ls15/scratch/users/f0002184/MinID_95 for the first dataset with the first final contigs .fa file as well.
-
-I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
-
-#### 3 July 2017
-Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I copied in the ref file from indexing the contigs to the MinID_95 directory and resubmitted the jobs because the error files say that they couldn't locate a file from that directory it needs to map the reads.
-
-Also, re-submitted the sam to bam for Cen03 for the second dataset since it didn't copy over right the first time, then copied it over to the BAM_Files directory to re-run the depth files for the second dataset. Submitted jobs for both 2016 and 2017 versions of MetaBAT for second dataset with minID 0.76 for depth files. 
 
 ## Converting .sam to .bam
 #### 6 June 2017
@@ -290,9 +230,6 @@ map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA, map_Cen12_MA, map_Cen15_
 The .sam files seem to be around 50-60Gb.
 
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
-
-#### 26 June 2017
-Jobs to convert .sam to .bam for the second dataset for the first 11 sites have been submitted. Will submit the job to convert Cen12_MA.sam to .bam as soon as it is ready. These jobs can be found in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping.
 
 ___
 ## Binning
@@ -362,19 +299,6 @@ Also check out this cool [link](https://wiki.gacrc.uga.edu/wiki/MetaBAT-Sapelo)
 with some tips!
 
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
-
-#### 28 June 2017
-My second dataset have all convered to .bam files, so I will index the .bam files, create the depth file and bin them. I used a job to bin them this time, and gave the job 3 hours.
-
-The jobs aborted! Changed walltime to 5 hours and resubmitted.
-
-#### 30 June 2017
-The jobs aborted again, so I changed it to 2 days for walltime. However, Jackson said they shouldn't take that long and after some investigation, turns out my Cen03_MA.bam file is weird, yet again. Oops should've known especially since the final contigs final for the second dataset is smaller, only 174 Mb. Resubmitted the job for .sam to .bam for Cen03.
-Also I submitted a job for the depth file this time and mistakenly made an error in the job script. I included
-```
-tmux new -s METABAT
-```
-when I shouldn't have. Deleted those lines from my depth_2016.qsub and depth_2017.qsub files. Will resubmit once Cen03.bam is done.
 
 ___
 ## CheckM
@@ -642,3 +566,89 @@ q + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
   ylab("Abundance") +
   coord_cartesian(ylim=c(0, 20))
   ```
+
+## Uncultured DNA Dataset
+#### 16 June 2017
+I am interleaving another dataset, extracted DNA of thermophiles from Cen13 (same site as previous dataset) that was not cultured.
+The job script is the same, just with the different file names of course. I will be doing the same procedure on this dataset as I did with the previous.
+```
+#! /bin/bash
+
+#PBS -l walltime=8:00:00
+#PBS -l nodes=1:ppn=8
+#PBS -l mem=100 Gb
+#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+#PBS -N Interleave_Reads_mgDNA
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+module load GNU/4.8.2
+module load khmer/2.0
+cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
+gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq.gz
+gunzip Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq.gz
+interleave-reads.py Cen13_mgDNA_Pooled_CTTGTA_L002_R1_001.fastq Cen13_mgDNA_Pooled_CTTGTA_L002_R2_001.fastq -o combined_reads_mgDNA.fastq
+```
+Everything to do with my second dataset can be found under /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA.
+
+#### 19 June 2017
+My second dataset quality control is finished! I used the same thresholds on this dataset. The combined_reads_mgDNA.fastq file was 53 Gb, and the combined_filtered_mgDNA.fastq one is 47 Gb, so ~6 Gb of data were eliminated.
+
+#### 20 June 2017
+I submitted a job for my second dataset in order to extract the paired end reads.
+
+#### 21 June 2017
+The second dataset paired reads were extracted, so I submitted the job to assemble the contigs! Whoohoo!
+
+#### 22 June 2017
+The job to assemble the contigs begun execution today.
+
+#### 23 June 2017
+The second dataset contigs finished assembly, so I copied the final.contigs.fa file into /mny/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping to start mapping.
+
+I submitted a job to index the contigs from the second dataset, which similarly took a very short time.
+
+
+#### 23 June 2017
+I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping for mapping.
+
+#### 25 June 2017
+Jobs for the 12 uncultured sites for mapping submitted!
+
+#### 26 June 2017
+Many of the jobs have begun and terminated, so it looks like the mapping will be done today for the second dataset.
+
+Jobs to convert .sam to .bam for the second dataset for the first 11 sites have been submitted. Will submit the job to convert Cen12_MA.sam to .bam as soon as it is ready. These jobs can be found in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping.
+
+#### 28 June 2017
+My second dataset have all convered to .bam files, so I will index the .bam files, create the depth file and bin them. I used a job to bin them this time, and gave the job 3 hours.
+
+The jobs aborted! Changed walltime to 5 hours and resubmitted.
+
+#### 30 June 2017
+The jobs aborted again, so I changed it to 2 days for walltime. However, Jackson said they shouldn't take that long and after some investigation, turns out my Cen03_MA.bam file is weird, yet again. Oops should've known especially since the final contigs final for the second dataset is smaller, only 174 Mb. Resubmitted the job for .sam to .bam for Cen03.
+Also I submitted a job for the depth file this time and mistakenly made an error in the job script. I included
+```
+tmux new -s METABAT
+```
+when I shouldn't have. Deleted those lines from my depth_2016.qsub and depth_2017.qsub files. Will resubmit once Cen03.bam is done.
+
+#### 3 July 2017
+Re-submitted the sam to bam for Cen03 for the second dataset since it didn't copy over right the first time, then copied it over to the BAM_Files directory to re-run the depth files for the second dataset. Submitted jobs for both 2016 and 2017 versions of MetaBAT for second dataset with minID 0.76 for depth files.
+
+#### 5 July 2017
+Decided to only go with the 2016 version of MetaBAT. The depth file using that version completed. Will submit jobs for binning.
+
+## Minimum ID 0.95 Datasets
+#### 30 June 2017
+Today I'm going to re-map the reads from the other Centralia sites onto the both datasets at a minimum identity level of 0.95, instead of the default 0.76 level.
+
+So I've created a new directory, in /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95 where I copied the final contigs .fa file from the second dataset as well as the reads from the Centralia sites. I will do this in /mnt/ls15/scratch/users/f0002184/MinID_95 for the first dataset with the first final contigs .fa file as well.
+
+I've submitted the 12 jobs for each of the sites for the mgDNA non-cultured dataset. Once those finish, I will submit the 12 jobs for the first cultured dataset since I can only have a maximum of 15 jobs on the HPCC at one time.
+
+#### 3 July 2017
+Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I copied in the ref file from indexing the contigs to the MinID_95 directory and resubmitted the jobs because the error files say that they couldn't locate a file from that directory it needs to map the reads.
+
+#### 5 July 2017
+The mapping jobs for the second dataset at min ID 0.95 finished! Submitted jobs to convert the .sam files to .bam for the second dataset 0.95 min ID. 

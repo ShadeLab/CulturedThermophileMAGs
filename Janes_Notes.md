@@ -610,7 +610,6 @@ The second dataset contigs finished assembly, so I copied the final.contigs.fa f
 
 I submitted a job to index the contigs from the second dataset, which similarly took a very short time.
 
-
 #### 23 June 2017
 I'm copying over the reads from the other Centralia sites into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/mapping for mapping.
 
@@ -672,3 +671,25 @@ Re-mapping the reads from the second dataset at minimum ID 0.95 didn't work. I c
 
 #### 5 July 2017
 The mapping jobs for the second dataset at min ID 0.95 finished! Submitted jobs to convert the .sam files to .bam for the second dataset 0.95 min ID.
+
+#### 6 July 2017
+The jobs to convert .sam to .bam for the second dataset 0.95 min ID finished and copied into /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files. I'm going to index them using
+```
+module load GNU/4.8.3
+module load SAMTools/1.3
+samtools index -b BAM_Files/*
+```
+in the MinID_95 directory command line so that I can create the depth file.
+
+Job for depth file has been submitted.
+
+Jobs to re-map the reads at 0.95 min ID for the first dataset have been submitted.
+
+## .FNA Files
+#### 6 July 2017
+Today I started indexing each of the .fna files from my Prokka results from the first dataset at min ID 0.76. I did it in the command line for each Sensitive and Specific directory found in /mnt/ls15/scratch/users/f0002184/Prokka/. Here are the commands:
+```
+module load bbmap
+bbmap.sh ref=filename.fna build=1 -Xmx215g
+```
+Each Sensitive and Specific bin in my Prokka directory now have the ref directory.

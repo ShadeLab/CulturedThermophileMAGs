@@ -20,6 +20,7 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [Correlation in R](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#correlation-in-r)
 * [Uncultured DNA Dataset](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#uncultured-dna-dataset)
 * [Minimum ID 0.95 Datasets](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#minimum-id-095-datasets)
+* [.FNA Files](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#fna-files_)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads

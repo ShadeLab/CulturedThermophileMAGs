@@ -694,3 +694,27 @@ module load bbmap
 bbmap.sh ref=filename.fna build=1 -Xmx215g
 ```
 Each Sensitive and Specific bin in my Prokka directory now have the ref directory.
+
+#### 7 July 2017
+I wrote the jobs to map the Centralia location reads to the .fna files for each sensitive and specific bins. Here is an example script:
+```
+#! /bin/bash
+
+#PBS -l walltime=24:00:00
+#PBS -l mem=250Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184/Prokka/Sensitive/Sensitive_Annotation_1
+#PBS -o /mnt/ls15/scratch/users/f0002184/Prokka/Sensitive/Sensitive_Annotation_1
+#PBS -N map_Sensitive_1_and_3
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load bbmap
+cd /mnt/ls15/scratch/users/f0002184/Prokka/Sensitive/Sensitive_Annotation_1
+bbmap.sh in=/mnt/ls15/scratch/users/f0002184/Metagenomes/Cen01.anqdp.fastq build=1 -Xmx215g out=Sensitive1_Cen01.sam
+
+bbmap.sh in=/mnt/ls15/scratch/users/f0002184/Metagenomes/Cen03.anqdp.fastq build=1 -Xmx215g out=Sensitive1_Cen03.sam
+
+qsub map_Cen04_Cen05.qsub
+```
+I wrote commands to map two locations in each job, so 6 jobs for each bin, as you can see from the two bbmap.sh commands. The last line in each script calls the next job to run. 

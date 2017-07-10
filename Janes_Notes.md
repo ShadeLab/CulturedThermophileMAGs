@@ -641,6 +641,26 @@ Re-submitted the sam to bam for Cen03 for the second dataset since it didn't cop
 #### 5 July 2017
 Decided to only go with the 2016 version of MetaBAT. The depth file using that version completed. Will submit jobs for binning.
 
+#### 10 July 2017
+I submitted the jobs to bin the second dataset at min ID 0.76. I submitted two jobs, one with the --veryspecific tag and another with the --verysensitive tag. Here are the job scripts:
+```
+#! /bin/bash
+
+#PBS -l walltime=10:00:00
+#PBS -l mem=200Gb
+#PBS -l nodes=1:ppn=16
+#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files/
+#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_pooled_mgDNA/BAM_Files/
+#PBS -N Binning_Genomes
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load GNU/4.8.3
+module load MetaBAT/20160622
+cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files
+metabat -i /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files/final.contigs.fa -v -a depth_2016.txt -o METABAT_VerySpecific --saveTNF saved.tnf --saveDistance saved.dist -t 16 --veryspecific
+```
+
 ## Minimum ID 0.95 Datasets
 #### 30 June 2017
 Today I'm going to re-map the reads from the other Centralia sites onto the both datasets at a minimum identity level of 0.95, instead of the default 0.76 level.
@@ -686,6 +706,28 @@ Job for depth file has been submitted.
 
 Jobs to re-map the reads at 0.95 min ID for the first dataset have been submitted.
 
+#### 10 July 2017
+The first dataset (cultured DNA) finished mapping, so I submitted jobs to convert .sam to .bam.
+
+The job for the second dataset (uncultured DNA) at 0.95 minID was taking too long, so I deleted the job, re-wrote it and re-submitted the job. Here it is:
+```
+#! /bin/bash
+
+#PBS -l walltime=4:00:00
+#PBS -l mem=100Gb
+#PBS -l nodes=1:ppn=12
+#PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
+#PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
+#PBS -N Depth_2016
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
+module load GNU/4.8.3
+module load MetaBAT/20160622
+jgi_summarize_bam_contig_depths --outputDepth depth_2016_Uncultured_95.txt *.bam
+```
+
 ## .FNA Files
 #### 6 July 2017
 Today I started indexing each of the .fna files from my Prokka results from the first dataset at min ID 0.76. I did it in the command line for each Sensitive and Specific directory found in /mnt/ls15/scratch/users/f0002184/Prokka/. Here are the commands:
@@ -717,4 +759,7 @@ bbmap.sh in=/mnt/ls15/scratch/users/f0002184/Metagenomes/Cen03.anqdp.fastq build
 
 qsub map_Cen04_Cen05.qsub
 ```
-I wrote commands to map two locations in each job, so 6 jobs for each bin, as you can see from the two bbmap.sh commands. The last line in each script calls the next job to run. 
+I wrote commands to map two locations in each job, so 6 jobs for each bin, as you can see from the two bbmap.sh commands. The last line in each script calls the next job to run.
+
+#### 10 July 2017
+The jobs have been running, and I assume they will be done shortly.

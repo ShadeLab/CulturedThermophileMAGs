@@ -709,6 +709,8 @@ Jobs to re-map the reads at 0.95 min ID for the first dataset have been submitte
 #### 10 July 2017
 The first dataset (cultured DNA) finished mapping, so I submitted jobs to convert .sam to .bam.
 
+Now I will index the .bam files and submit a job for the depth file.
+
 The job for the second dataset (uncultured DNA) at 0.95 minID was taking too long, so I deleted the job, re-wrote it and re-submitted the job. Here it is:
 ```
 #! /bin/bash
@@ -727,6 +729,11 @@ module load GNU/4.8.3
 module load MetaBAT/20160622
 jgi_summarize_bam_contig_depths --outputDepth depth_2016_Uncultured_95.txt *.bam
 ```
+The depth file finished, so I submitted the jobs for binning.
+
+Jobs for binning for first dataset at 0.95 submitted.
+
+Tried running commands in bash and they worked! The cultured dataset gave 4 bins with both specific and sensitive tags, whereas the uncultured datasets both turned out 0 bins. 
 
 ## .FNA Files
 #### 6 July 2017

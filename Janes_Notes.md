@@ -138,7 +138,7 @@ python metaquast.py -o /mnt/ls15/scratch/users/f0002184/quast-2.3 final.contigs.
 ```
 I don't need a job for this, but it does take a couple minutes. This resulted in several directories, of which one is quast_output. Once I cd into that, there is a text file named report.txt. When I use more to see the text file, there is a nice summary of my contigs!
 
-|Assembly | final.contigs|
+|Uncultured Dataset Assembly|
 | --------|:------------|
 |# contigs (>= 0 bp) | 508410|
 |# contigs (>= 1000 bp) | 222766|
@@ -157,7 +157,7 @@ I don't need a job for this, but it does take a couple minutes. This resulted in
 #### 11 July 2017
 MetaQUAST of second dataset:
 
-|Assembly | final.contigs|
+|Cultured Dataset Assembly|
 | --------|:------------|
 |# contigs (>= 0 bp) | 60865|
 |# contigs (>= 1000 bp) | 28137|

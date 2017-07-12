@@ -97,6 +97,13 @@ extract-paired-reads.py combined_filtered.fastq
 
 The result of this job is two files, combined_filtered.fastq.pe (pe for paired end) of 34 Gb and combined_filtered.fastq.se (se for single end) of 7.4 Gb. I will only use the paired end file.
 
+#### 11 July 2017
+Today I counted the number of sequences in the original data, the quality controlled data, and the paired end data. There are 75,131,216, 121,634,021, and 99,865,566 sequences respectively.
+I did this using
+```
+grep @HWI filename.fastq|wc -l
+```
+
 ## Assembling the Paired Reads
 Lastly, I used the paired end data file in order to assemble the reads into contigs by submitting another job. I wrote a script for this, called megahit.qsub in the same directory, found below.
 
@@ -146,6 +153,26 @@ I don't need a job for this, but it does take a couple minutes. This resulted in
 |L50 | 59145|        
 |L75 | 198925|       
 |# N's per 100 kbp | 0.00|
+
+#### 11 July 2017
+MetaQUAST of second dataset:
+
+|Assembly | final.contigs|
+| --------|:------------|
+|# contigs (>= 0 bp) | 60865|
+|# contigs (>= 1000 bp) | 28137|
+|Total length (>= 0 bp) | 117928436|
+|Total length (>= 1000 bp) | 95212184|
+|# contigs | 60865|
+|Largest contig | 322840|       
+|Total length | 117928436|    
+|GC (%) | 48.68|   
+|N50 | 3218|       
+|N75 | 1223|        
+|L50 | 6398|        
+|L75 | 22001|       
+|# N's per 100 kbp | 0.00|
+
 ___
 ## Mapping
 There are a couple steps to mapping the reads from the other sites to the assembled contigs. Primarily I need to index the contigs (the Mega-Assembly or MA) and then map the reads onto them.
@@ -733,7 +760,7 @@ The depth file finished, so I submitted the jobs for binning.
 
 Jobs for binning for first dataset at 0.95 submitted.
 
-Tried running commands in bash and they worked! The cultured dataset gave 4 bins with both specific and sensitive tags, whereas the uncultured datasets both turned out 0 bins. 
+Tried running commands in bash and they worked! The cultured dataset gave 4 bins with both specific and sensitive tags, whereas the uncultured datasets both turned out 0 bins.
 
 ## .FNA Files
 #### 6 July 2017

@@ -173,6 +173,19 @@ MetaQUAST of second dataset:
 |L75 | 22001|       
 |# N's per 100 kbp | 0.00|
 
+#### 17 July 2017
+Today I ran MetaQUAST on the 4 specific bins from minimum alignment ID 0.76 (first dataset).
+Specific 1 length: 3407405
+
+Specific 2 length: 2633151
+
+Specific 3 length: 1979326
+
+Specific 4 length: 4927645
+
+Cumulative length: 12947527
+
+Total length of assembly: 898424779
 ___
 ## Mapping
 There are a couple steps to mapping the reads from the other sites to the assembled contigs. Primarily I need to index the contigs (the Mega-Assembly or MA) and then map the reads onto them.
@@ -778,7 +791,7 @@ checkm lineage_wf -x fa /mnt/ls15/scratch/users/f0002184/MinID_95/Bins /mnt/ls15
 ```
 It looks like it is finally working.
 
-Yay it's done! All 8 bins are above 50% complete, with the lowest being 54.53% complete which is the Specific 3 bin. Most complete is Sensitive 1, at 96.31% completed, 9.09% contamination. 6 out of the 8 bins are < 10% contaminated, with Sensitive 4 being 23.58% contaminated and Sensitive 3 being 48.29% contaminated. It looks like generally the specific bins are less complete, but also less contaminated. 
+Yay it's done! All 8 bins are above 50% complete, with the lowest being 54.53% complete which is the Specific 3 bin. Most complete is Sensitive 1, at 96.31% completed, 9.09% contamination. 6 out of the 8 bins are < 10% contaminated, with Sensitive 4 being 23.58% contaminated and Sensitive 3 being 48.29% contaminated. It looks like generally the specific bins are less complete, but also less contaminated.
 
 ## .FNA Files
 #### 6 July 2017

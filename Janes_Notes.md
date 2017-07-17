@@ -224,6 +224,9 @@ cd /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 bbmap.sh in=/mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/Cen01.anqdp.fastq build=1 -Xmx215g out=Cen01_MA.sam
 ```
 
+#### 14 July 2017
+Today I mapped Cen13 to the assembled contigs. The output is Cen13.sam, NOT Cen13_MA.sam.
+
 ## Converting .sam to .bam
 #### 6 June 2017
 Now that the jobs are submitted and are in queue, I think it's going to take a few days. I've taken the liberty to go ahead and write some more job scripts in preparation. Once these jobs are done, I'm going to have .sam files that will need to be converted to .bam files in order for MetaBAT to bin these genomes. I will use SAMTools/1.3 to do this. Here is an example of one job script, but I will have to do this for every sample site.
@@ -260,6 +263,9 @@ map_Cen03_MA, map_Cen05_MA, map_Cen06_MA, map_Cen07_MA, map_Cen12_MA, map_Cen15_
 The .sam files seem to be around 50-60Gb.
 
 Cen01_MA.bam (13 Gb), Cen03_MA.bam (15 Gb), Cen05_MA.bam (15 Gb) finished converting from .sam to .bam! I copied them into my BAM_Files directory.
+
+#### 17 July 2017
+Today I converted Cen13.sam to Cen13.bam.
 
 ___
 ## Binning
@@ -762,6 +768,18 @@ Jobs for binning for first dataset at 0.95 submitted.
 
 Tried running commands in bash and they worked! The cultured dataset gave 4 bins with both specific and sensitive tags, whereas the uncultured datasets both turned out 0 bins.
 
+#### 17 July 2017
+After much troubleshooting with CheckM yet again, I managed to enter commands to run CheckM on my 8 (4 Specific and 4 Sensitive) new bins at MinID = 0.95.
+Here are the commands I entered, excluding module load prodigal, module load pplacer/1.1, module load HMMER/3.1b2.
+```
+tmux new -s CheckM
+source /mnt/research/ShadeLab/Sorensen/software/load_CheckM.sh
+checkm lineage_wf -x fa /mnt/ls15/scratch/users/f0002184/MinID_95/Bins /mnt/ls15/scratch/users/f0002184/MinID_95/Bins/CheckM/
+```
+It looks like it is finally working.
+
+Yay it's done! All 8 bins are above 50% complete, with the lowest being 54.53% complete which is the Specific 3 bin. Most complete is Sensitive 1, at 96.31% completed, 9.09% contamination. 6 out of the 8 bins are < 10% contaminated, with Sensitive 4 being 23.58% contaminated and Sensitive 3 being 48.29% contaminated. It looks like generally the specific bins are less complete, but also less contaminated. 
+
 ## .FNA Files
 #### 6 July 2017
 Today I started indexing each of the .fna files from my Prokka results from the first dataset at min ID 0.76. I did it in the command line for each Sensitive and Specific directory found in /mnt/ls15/scratch/users/f0002184/Prokka/. Here are the commands:
@@ -797,3 +815,6 @@ I wrote commands to map two locations in each job, so 6 jobs for each bin, as yo
 
 #### 10 July 2017
 The jobs have been running, and I assume they will be done shortly.
+
+#### 14 July 2017
+I submitted a job to convert Specific1_Cen01.sam to Specific1_Cen01.bam which finished.

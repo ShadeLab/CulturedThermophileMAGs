@@ -348,10 +348,6 @@ Also check out this cool [link](https://wiki.gacrc.uga.edu/wiki/MetaBAT-Sapelo)
 with some tips!
 
 So I tried running the commands from the script separately just to see if they worked, and they did, and only gave me 4 "bins". Seemed weird, but apparently it's okay! So now I have 4 bins, all in a separate directory called Genome_Bins, called METABAT_VerySpecific_Trial.1.fa - METABAT_VerySpecific_Trial.4.fa. They are between 2.0 Mb and 4.8 Mb. I used the 2016 MetaBAT version for this.
-
-#### 18 July 2017
-I indexed and made a depth file for Cen13 binning, and binned it. There are 139 bins! 
-
 ___
 ## CheckM
 #### 13 June 2017

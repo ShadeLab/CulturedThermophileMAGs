@@ -21,6 +21,7 @@ This project takes quality controlled sequenced DNA from a cultured pool and ass
 * [Uncultured DNA Dataset](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#uncultured-dna-dataset)
 * [Minimum ID 0.95 Datasets](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#minimum-id-095-datasets)
 * [.FNA Files](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#fna-files)
+* [.FFN Files](https://github.com/ShadeLab/CulturedThermophileMAGs/blob/master/Janes_Notes.md#ffn-files)
 
 #### 30 May 2017 - 6 June 2017
 ## Interleaving Reads
@@ -707,7 +708,7 @@ metabat -i /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files/final.c
 ```
 
 #### 10 July 2017
-Binning was attempted on this dataset, but turned out 0 bins. 
+Binning was attempted on this dataset, but turned out 0 bins.
 
 ## Minimum ID 0.95 Datasets
 #### 30 June 2017

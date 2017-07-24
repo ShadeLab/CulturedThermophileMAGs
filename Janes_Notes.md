@@ -41,7 +41,7 @@ Job script for interleave:
 #PBS -e /mnt/ls15/scratch/users/f0002184/
 #PBS -o /mnt/ls15/scratch/users/f0002184/
 #PBS -N Interleave_Reads
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load GNU/4.8.2
@@ -66,7 +66,7 @@ Job script for fastx:
 #PBS -N Quality_Filtering_Culture
 #PBS -e /mnt/ls15/scratch/users/f0002184/
 #PBS -o /mnt/ls15/scratch/users/f0002184/
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load fastx
@@ -88,7 +88,7 @@ Job script:
 #PBS -e /mnt/ls15/scratch/users/f0002184/
 #PBS -o /mnt/ls15/scratch/users/f0002184/
 #PBS -N Match_Reads_Culture
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 module load GNU/4.8.2
 module load khmer/2.0
@@ -117,7 +117,7 @@ Lastly, I used the paired end data file in order to assemble the reads into cont
 #PBS -e /mnt/ls15/scratch/users/f0002184/
 #PBS -o /mnt/ls15/scratch/users/f0002184/
 #PBS -N Megahit_QC_Culture
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 module load megahit
 cd /mnt/ls15/scratch/users/f0002184/
@@ -207,7 +207,7 @@ I used a job to do this. It was very speedy! Only 3 minutes or so.
 #PBS -e /mnt/scratch/ls15/users/f0002184/MAPPING_MEGA_ASSEMBLY
 #PBS -o /mnt/scratch/ls15/users/f0002184/MAPPING_MEGA_ASSEMBLY
 #PBS -N index_mega_assembly
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load bbmap
@@ -230,7 +230,7 @@ I then wrote job scripts for each of those sites to map the reads, the one for C
 #PBS -e /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 #PBS -o /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY
 #PBS -N map_Cen01_MA
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load bbmap
@@ -253,7 +253,7 @@ Now that the jobs are submitted and are in queue, I think it's going to take a f
 #PBS -e /mnt/ls15/scratch/users/f0002184
 #PBS -o /mnt/ls15/scratch/users/f0002184
 #PBS -N Sam_to_Bam_Cen01
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load GNU/4.8.3
@@ -323,7 +323,7 @@ Here is the script, called binning.qsub in /mnt/ls15/scratch/users/f0002184/MAPP
 #PBS -e /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
 #PBS -o /mnt/ls15/scratch/users/f0002184/MAPPING_MEGA_ASSEMBLY/BAM_Files/Genome_Binning
 #PBS -N Binning_Genomes
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load GNU/4.8.3
@@ -629,7 +629,7 @@ The job script is the same, just with the different file names of course. I will
 #PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
 #PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA
 #PBS -N Interleave_Reads_mgDNA
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 module load GNU/4.8.2
 module load khmer/2.0
@@ -698,7 +698,7 @@ I submitted the jobs to bin the second dataset at min ID 0.76. I submitted two j
 #PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files/
 #PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_pooled_mgDNA/BAM_Files/
 #PBS -N Binning_Genomes
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load GNU/4.8.3
@@ -728,7 +728,7 @@ Here is the job script:
 #PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95
 #PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95
 #PBS -N map_Cen01_MA
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load bbmap
@@ -770,7 +770,7 @@ The job for the second dataset (uncultured DNA) at 0.95 minID was taking too lon
 #PBS -e /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
 #PBS -o /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
 #PBS -N Depth_2016
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/MinID_95/BAM_Files
@@ -816,7 +816,7 @@ I wrote the jobs to map the Centralia location reads to the .fna files for each 
 #PBS -e /mnt/ls15/scratch/users/f0002184/Prokka/Sensitive/Sensitive_Annotation_1
 #PBS -o /mnt/ls15/scratch/users/f0002184/Prokka/Sensitive/Sensitive_Annotation_1
 #PBS -N map_Sensitive_1_and_3
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load bbmap
@@ -847,7 +847,7 @@ For Specific 1, I already made the depth file:
 #PBS -e /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
 #PBS -o /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
 #PBS -N Depth_Genes
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 cd /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
@@ -882,7 +882,7 @@ So it turns out to map the genes, the reads need to be mapped against the .ffn f
 #PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95
 #PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95
 #PBS -N map_Specific_1
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 
@@ -902,7 +902,7 @@ And the job script for sam to bam:
 #PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95
 #PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95
 #PBS -N Sam_to_Bam_Cen01
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 module load GNU/4.8.3
@@ -924,7 +924,7 @@ And to make the depth file:
 #PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95/
 #PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95/
 #PBS -N Depth_Genes_95
-#PBS -M jlee4946@gmail.com
+#PBS -M email@example.com
 #PBS -m abe
 
 cd /mnt/ls15/scratch/users/f0002184/FFN_95/BAM_Files
@@ -932,7 +932,7 @@ module load GNU/4.8.3
 module load MetaBAT/20160622
 jgi_summarize_bam_contig_depths --outputDepth depth_genes_95.txt *.bam
 ```
-Then I read the depth file into R and found gene coverage for each Centralia site. Cen14 and Cen16 had the highest gene coverage and were fire affected sites, so I chose them as my two sites of interest. I then got the gene frequency of Cen14 and Cen16 by dividing the gene coverage of each gene by the median coverage of all other genes in the genome. From there, I could find suggested instances of gene loss/gain by looking at a histogram of the differences in gene frequencies in each site. Taking the absolute value of these differences, we decided a difference > 1.0 suggests change in gene frequency between the two sites. Here is my R script for this process:
+Then I read the depth file into R and found gene coverage for each Centralia site. In order for formatting to work, I had to edit the depth text file and delete all parentheses, and the prime (') symbol for 5'. Cen14 and Cen16 had the highest gene coverage and were fire affected sites, so I chose them as my two sites of interest. I then got the gene frequency of Cen14 and Cen16 by dividing the gene coverage of each gene by the median coverage of all other genes in the genome. From there, I could find suggested instances of gene loss/gain by looking at a histogram of the differences in gene frequencies in each site. Taking the absolute value of these differences, we decided a difference > 1.0 suggests change in gene frequency between the two sites. Here is my R script for this process:
 ```
 x <- read.table("~/Documents/MSU_REU/depth_genes_95_edited.txt", sep="\t", row.names=1, header = TRUE, stringsAsFactors = FALSE)
 x

@@ -1,7 +1,7 @@
 library(ggplot2)
 library(reshape2)
 
-setwd("/Users/janelee/Documents/MSU_REU/Coverage_Specific/")
+setwd("")
 
 x <- read.table("CPR_FileNames_Specific.txt", stringsAsFactors = FALSE)
 y <- NULL
@@ -19,8 +19,6 @@ for(i in 1:4){
   values <- ((colSums(y[[i]][,seq(4,27,2)]))/nrow(y[[i]]))
   total <- rbind(total, values)
 }
-total
-class(values)
 
 column_names <- NULL
 column_names <- data.frame("Cen01_MA.bam", "Cen03_MA.bam", "Cen04_MA.bam", "Cen05_MA.bam", "Cen06_MA.bam", "Cen07_MA.bam", "Cen10_MA.bam", "Cen12_MA.bam", "Cen14_MA.bam", "Cen15_MA.bam", "Cen16_MA.bam", "Cen17_MA.bam")
@@ -29,41 +27,26 @@ colnames(total) <- column[,1]
 
 row.names(total) <- x[,1]
 
-
-setwd("/Users/janelee/Documents/MSU_REU/")
 metadata <- read.table("Centralia_Collapsed_Map_forR.txt", sep="\t", header = T)
 metadata_edit <- metadata[-c(2, 8, 9, 11, 13, 18), ]
-metadata_edit
 
 soil_temp <- metadata_edit$SoilTemperature_to10cm
-soil_temp
-
-total
 
 z <- NULL
 z <- as.list(z)
 for(i in 1:4) {
   z[[i]] <- cor.test(soil_temp, as.numeric(total[i,]))
 }
-z
-
-correlation <- matrix(c(0.7125, 0.05247, 0.8897, 0.873), ncol=4, byrow = F)
-colnames(correlation) <- c("Specific 1", "Specific 2", "Specific 3", "Specific 4")
-correlation <- as.table(correlation)
-correlation
-
 
 for(i in 1:4) {
 plot(soil_temp, total[i,], xlab = "Temperature °C", ylab = "Abundance")
 }
 
 total_transpose <- t(total)
-total_transpose
 
 total_reshape <- melt(total_transpose, id=c("Coverage.METABAT_VerySpecific_Trial.1", 
   "Coverage.METABAT_VerySpecific_Trial.2", "Coverage.METABAT_VerySpecific_Trial.3",
   "Coverage.METABAT_VerySpecific_Trial.4"))
-total_reshape
 
 p <- ggplot(total_reshape, aes(x = Var1, y= value, group = as.factor(Var2))) 
 p + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
@@ -87,8 +70,6 @@ p + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
              "Cen07", "Cen10", "Cen12", "Cen14",
              "Cen15", "Cen16", "Cen17"))
     
-  
-
 q <- ggplot(total_reshape, aes(x = Var1, y= value, group = as.factor(Var2))) 
 q + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)
@@ -112,9 +93,7 @@ q + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
              "Cen15", "Cen16", "Cen17"))
 
 soil_df <- as.data.frame(soil_temp)
-soil_df
 df <- data.frame(x=1:12, y=soil_df$soil_temp)
-df
 soil_plot <- ggplot(df, aes(x,y))
 soil_plot + geom_line(stat = "identity", aes (x,y)) + 
   scale_x_discrete(
@@ -132,9 +111,9 @@ soil_plot + geom_line(stat = "identity", aes (x,y)) +
   ggtitle("Soil Temperatures in each Centralia Location") +
   theme(plot.title = element_text(hjust = 0.5)) 
 
-b <- ggplot(subset(total_reshape, Var1 %in% c("Cen01_MA.bam","Cen03_MA.bam", "Cen04_MA.bam", 
+cold_sites <- ggplot(subset(total_reshape, Var1 %in% c("Cen01_MA.bam","Cen03_MA.bam", "Cen04_MA.bam", 
                                               "Cen05_MA.bam", "Cen07_MA.bam", "Cen17_MA.bam")), aes(x = Var1, y= value, group = as.factor(Var2))) 
-b + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
+cold_sites + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)
   ) + 
   ggtitle("Coverage in Cold Sites") +
@@ -154,9 +133,9 @@ b + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
              "Coverage.METABAT_VerySpecific_Trial.4"),
     labels=c("Specific 1", "Specific 2", "Specific 3", "Specific 4"))
 
-c <- ggplot(subset(total_reshape, Var1 %in% c("Cen06_MA.bam","Cen10_MA.bam", "Cen12_MA.bam", 
+hot_sites <- ggplot(subset(total_reshape, Var1 %in% c("Cen06_MA.bam","Cen10_MA.bam", "Cen12_MA.bam", 
      "Cen14_MA.bam", "Cen15_MA.bam", "Cen16_MA.bam")), aes(x = Var1, y= value, group = as.factor(Var2))) 
-c + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
+hot_sites + geom_bar(stat = "identity", aes (fill = Var2), position = "dodge") +
   theme(axis.text.x = element_text(angle = 50, hjust = 1)
   ) + 
   ggtitle("Coverage in Hot Sites") +

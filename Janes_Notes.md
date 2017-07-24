@@ -706,6 +706,9 @@ cd /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files
 metabat -i /mnt/ls15/scratch/users/f0002184/Cen13_Pooled_mgDNA/BAM_Files/final.contigs.fa -v -a depth_2016.txt -o METABAT_VerySpecific --saveTNF saved.tnf --saveDistance saved.dist -t 16 --veryspecific
 ```
 
+#### 10 July 2017
+Binning was attempted on this dataset, but turned out 0 bins. 
+
 ## Minimum ID 0.95 Datasets
 #### 30 June 2017
 Today I'm going to re-map the reads from the other Centralia sites onto the both datasets at a minimum identity level of 0.95, instead of the default 0.76 level.
@@ -830,3 +833,146 @@ The jobs have been running, and I assume they will be done shortly.
 
 #### 14 July 2017
 I submitted a job to convert Specific1_Cen01.sam to Specific1_Cen01.bam which finished.
+
+#### 19 July 2017
+All my Specific bins .sam files have been converted to .bam files.
+For Specific 1, I already made the depth file:
+```
+#! /bin/bash
+
+#PBS -l walltime=3:59:00
+#PBS -l mem=100Gb
+#PBS -l nodes=1:ppn=12
+#PBS -e /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
+#PBS -o /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
+#PBS -N Depth_Genes
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+cd /mnt/ls15/scratch/users/f0002184/Prokka/Specific/Specific_Annotation_1/BAM_Files
+module load GNU/4.8.3
+module load MetaBAT/20160622
+jgi_summarize_bam_contig_depths --outputDepth depth_genes.txt *.bam
+```
+I read the file into R to make histograms for each Centralia site. The script looks something like
+```
+setwd("/Users/janelee/Documents/MSU_REU/")
+x <- read.table("depth_genes.txt", stringsAsFactors = FALSE, header = T)
+
+y <- x[c(4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26)]
+
+titles
+titles <- data.frame("Cen01", "Cen03", "Cen04", "Cen05", "Cen06", "Cen07", "Cen10", "Cen12",
+                        "Cen14", "Cen15", "Cen16", "Cen17")
+
+for(i in 1:12) {
+  hist[[i]] <- hist(y[,i], main = paste("Histogram of Genes in", titles[,i]), xlab = "Gene Abundance")
+}
+```
+## .FFN Files
+#### 19 July 2017
+So it turns out to map the genes, the reads need to be mapped against the .ffn files, not the .fna files. I indexed the .fna file from Specific 1 for the ref directory and re-mapped the reads onto that file to get my .sam files which I converted to .bam, from which I got the depth file, or gene coverage. I first mapped them using .76 MinID then did it again at 0.95. Everything is in /mnt/ls15/scratch/users/f0002184/FFN_95. Here is a sample job script:
+```
+#! /bin/bash
+
+#PBS -l walltime=3:59:00
+#PBS -l mem=250Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95
+#PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95
+#PBS -N map_Specific_1
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+
+module load bbmap
+cd /mnt/ls15/scratch/users/f0002184/FFN_95
+
+bbmap.sh in=/mnt/ls15/scratch/users/f0002184/Metagenomes/Cen01.anqdp.fastq build=1 -Xmx215g out=Specific1_Cen01_95.sam minid=0.95
+qsub sam_to_bam_Cen01.qsub
+```
+And the job script for sam to bam:
+```
+#! /bin/bash
+
+#PBS -l walltime=3:59:00
+#PBS -l mem=100Gb
+#PBS -l nodes=1:ppn=8
+#PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95
+#PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95
+#PBS -N Sam_to_Bam_Cen01
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+module load GNU/4.8.3
+module load SAMTools/1.3
+cd /mnt/ls15/scratch/users/f0002184/FFN_95
+
+samtools view -bS Specific1_Cen01_95.sam > Specific1_Cen01_95.bam
+samtools sort -o Specific1_Cen01_95.bam -T Specific1_Cen01_95_Sorted -@ 8 -m 8G Specific1_Cen01_95.bam
+
+cp Specific1_Cen01_95.bam /mnt/ls15/scratch/users/f0002184/FFN_95/BAM_Files
+```
+And to make the depth file:
+```
+#! /bin/bash
+
+#PBS -l walltime=3:59:59
+#PBS -l mem=100Gb
+#PBS -l nodes=1:ppn=12
+#PBS -e /mnt/ls15/scratch/users/f0002184/FFN_95/
+#PBS -o /mnt/ls15/scratch/users/f0002184/FFN_95/
+#PBS -N Depth_Genes_95
+#PBS -M jlee4946@gmail.com
+#PBS -m abe
+
+cd /mnt/ls15/scratch/users/f0002184/FFN_95/BAM_Files
+module load GNU/4.8.3
+module load MetaBAT/20160622
+jgi_summarize_bam_contig_depths --outputDepth depth_genes_95.txt *.bam
+```
+Then I read the depth file into R and found gene coverage for each Centralia site. Cen14 and Cen16 had the highest gene coverage and were fire affected sites, so I chose them as my two sites of interest. I then got the gene frequency of Cen14 and Cen16 by dividing the gene coverage of each gene by the median coverage of all other genes in the genome. From there, I could find suggested instances of gene loss/gain by looking at a histogram of the differences in gene frequencies in each site. Taking the absolute value of these differences, we decided a difference > 1.0 suggests change in gene frequency between the two sites. Here is my R script for this process:
+```
+x <- read.table("~/Documents/MSU_REU/depth_genes_95_edited.txt", sep="\t", row.names=1, header = TRUE, stringsAsFactors = FALSE)
+x
+y <- x[c(3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27)]
+y
+
+titles <- NULL
+titles <- data.frame("Cen01", "Cen03", "Cen04", "Cen05", "Cen06", "Cen07", "Cen10", "Cen12",
+                    "Cen13", "Cen14", "Cen15", "Cen16", "Cen17")
+hist <- NULL
+for(i in 1:13) {
+  hist[[i]] <- hist(y[,i], main = paste("Gene Coverage in", titles[,i]),
+                    xlab = "Gene Coverage")
+}
+
+freq <- x[c(21, 25)]
+freq
+freq[,1]
+median_freq <- NULL
+for(i in 1:2) {
+  median_freq[i] <- median(freq[,i])
+}
+median_freq
+
+gene_freq <- freq/median_freq
+gene_freq
+
+
+cen14_freq <- hist(gene_freq[,1], main = "Gene Frequency in Cen14", xlab = "Gene Frequency",
+                   col = "indianred1")
+cen16_freq <- hist(gene_freq[,2], main = "Gene Frequency in Cen16", xlab = "Gene Frequency",
+                   col = "indianred1")
+
+abs_hist <- hist((abs(gene_freq[,1] - gene_freq[,2])),
+                 main="Absolute Value of Gene Frequency Differences \n in Cen14 and Cen16",
+                 xlab = "Magnitude of Gene Frequency Differences",
+                 col = "darkmagenta")
+
+non_abs_hist <- hist((gene_freq[,1] - gene_freq[,2]),
+                     main="Gene Frequency Differences \n in Cen14 and Cen16",
+                     xlab = "Gene Frequency Differences",
+                     col = "darkmagenta",
+                     breaks = 30)
+```
